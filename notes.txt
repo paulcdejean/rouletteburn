@@ -1,0 +1,11 @@
+https://nodejs.dev/en/learn/understanding-setimmediate/
+
+Above is useful info to avoid hitching the main thread
+
+Any synchronous hitches will screw up timings a lot
+
+Use performance now() to resync clocks
+
+Correct waits at the beginning
+
+After the wait, drop hack and grow calls that fall outside of their windows, and tprint a notice
