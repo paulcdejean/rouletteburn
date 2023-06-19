@@ -1,0 +1,14 @@
+{
+  "name": "rustburn",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "cargo build --target=wasm32-wasi --release && vite build"
+  },
+  "dependencies": {
+    "bitburner-filesync": "^1.1.5",
+    "vite": "^4.3.9",
+    "vite-plugin-wasm": "^3.2.2"
+  }
+}
