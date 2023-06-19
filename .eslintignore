@@ -1,0 +1,5 @@
+bootstrap_hack.js
+obfuscate/
+dist/
+bitburner/
+NetscriptDefinitions.d.ts
