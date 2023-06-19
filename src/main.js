@@ -1,4 +1,6 @@
+import { noodle } from './n00dles.js'
+
 /** @param {NS} ns */
 export async function main(ns) {
-	ns["hack"]("n00dles")
+	await noodle(ns)
 }
