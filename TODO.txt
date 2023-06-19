@@ -1,0 +1,5 @@
+convert to typescript
+
+tslint
+
+capability determination logic
