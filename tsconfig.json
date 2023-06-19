@@ -1,5 +1,6 @@
 {
   "include": ["NetscriptDefinitions.d.ts", "src/**/*"],
+  "exclude": [".eslintc.cjs"],
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",

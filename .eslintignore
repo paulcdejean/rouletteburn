@@ -3,3 +3,5 @@ obfuscate/
 dist/
 bitburner/
 NetscriptDefinitions.d.ts
+vite.config.js
+.eslintrc.cjs
