@@ -9,3 +9,9 @@ Use performance now() to resync clocks
 Correct waits at the beginning
 
 After the wait, drop hack and grow calls that fall outside of their windows, and tprint a notice
+
+"When grow finishes, it grows the server based on the security level at the moment that it finishes"
+
+"so the timing is based on the start, but the growth amount is based on the finish"
+
+That means HWGW, HGW and HG*W (HGHGHGHGW) are all viable
