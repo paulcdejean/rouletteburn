@@ -4,11 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "vite build && javascript-obfuscator dist/timeburn.js -o obfuscate/timeburn.js --config obfuscator.config.json && shx cat bootstrap.js obfuscate/timeburn.js > bitburner/timeburn.js"
+    "build": "run-s build:*",
+    "build:vite": "vite build",
+    "build:obfuscate": "javascript-obfuscator dist/timeburn.js -o obfuscate/timeburn.js --config obfuscator.config.json",
+    "build:bootstrap": "shx cat bootstrap.js obfuscate/timeburn.js > bitburner/timeburn.js"
   },
   "dependencies": {
     "bitburner-filesync": "^1.1.5",
     "javascript-obfuscator": "^4.0.2",
+    "npm-run-all": "^4.1.5",
     "shx": "^0.3.4",
     "vite": "^4.3.9",
     "vite-plugin-wasm": "^3.2.2"
