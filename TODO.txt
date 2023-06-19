@@ -1,3 +1,1 @@
-tslint
-
 capability determination logic
