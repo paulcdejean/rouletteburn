@@ -1,8 +1,9 @@
 import type { NS } from "@ns";
 
-import { noodle } from '@/n00dles.ts'
+import { refreshNetwork } from '@/refreshNetwork.ts'
+import { Capabilities } from "./Capabilities";
 
 export async function main(ns: NS): Promise<void> {
-  await noodle(ns)
-  ns.tprint("Hello typescript!");
+  const network = refreshNetwork(ns, Capabilities.Basic)
+  ns.tprint(JSON.stringify(network))
 }

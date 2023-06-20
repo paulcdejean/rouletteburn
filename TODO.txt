@@ -1,1 +1,1 @@
-capability determination logic
+Automate filesync, start testing

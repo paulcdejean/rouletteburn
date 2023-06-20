@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "build": "run-s build:*",
+    "build:lint": "eslint .",
     "build:typescript": "tsc",
     "build:vite": "vite build",
     "build:obfuscate": "javascript-obfuscator dist/timeburn.js -o obfuscate/timeburn.js --config obfuscator.config.json",
-    "build:bootstrap": "shx cat bootstrap_hack.js obfuscate/timeburn.js > bitburner/timeburn.js"
+    "build:bootstrap": "shx cat capabilities/basic.js obfuscate/timeburn.js > bitburner/timeburn.js"
   },
   "devDependencies": {
     "@types/node": "^20.3.1",

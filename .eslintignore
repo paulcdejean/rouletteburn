@@ -2,6 +2,8 @@ bootstrap_hack.js
 obfuscate/
 dist/
 bitburner/
+bootstrap/
 NetscriptDefinitions.d.ts
 vite.config.js
 .eslintrc.cjs
+capabilities/
