@@ -1,25 +1,21 @@
 import type { NS } from "@ns";
 import { Network } from "@/Network.ts"
 import { Capabilities } from "@/Capabilities.ts"
-import { home } from "@/constants.ts"
+import { home, cave } from "@/constants.ts"
 
 
 
 export function refreshNetwork(ns: NS, capabilities: Capabilities): Network {
   const network = new Network()
 
-  const homeConnected = ns.scan(home)
-
-  homeConnected.forEach((nearbyServer) => {
-    addToNetwork(ns, capabilities, network, nearbyServer)
-  })
+  addToNetwork(ns, capabilities, network, home, [])
 
   network.upToDate = true
 
   return network
 }
 
-function addToNetwork(ns: NS, capabilities: Capabilities, network: Network, server: string) {
+function addToNetwork(ns: NS, capabilities: Capabilities, network: Network, server: string, cavePath: string[]) {
   if (server in network.servers) {
     return
   } else {
@@ -50,7 +46,12 @@ function addToNetwork(ns: NS, capabilities: Capabilities, network: Network, serv
 
     const nearbyServers = ns.scan(server)
     nearbyServers.forEach((nearbyServer) => {
-      addToNetwork(ns, capabilities, network, nearbyServer)
+      const updatedCavePath = Array.from(cavePath)
+      updatedCavePath.push(server)
+      if (server == cave) {
+        network.cavePath = updatedCavePath
+      }
+      addToNetwork(ns, capabilities, network, nearbyServer, updatedCavePath)
     })
   }
 }

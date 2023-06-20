@@ -6,6 +6,8 @@ type Servers = {
 
 export class Network {
   public upToDate = false;
+
+  public cavePath : string[] | null = null;
  
   public servers : Servers = {}
 }
