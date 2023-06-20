@@ -1,12 +1,14 @@
 () => {
   exec; // Essential
-  getServerMaxRam; // Essential for upgrading
   getScriptRam; // Essential for upgrading capabilities
 
   scp; // Essential
   scan; // Essential
   nuke; // Essential
 
+  getGrowTime; // Essential
+  getHackTime; // Essential
+  getWeakenTime; // Essential
   
   brutessh; // Cracks
   ftpcrack;  // Cracks
@@ -24,4 +26,5 @@
   getServerMaxRam;
   hasRootAccess;
   getServerNumPortsRequired;
+
 }

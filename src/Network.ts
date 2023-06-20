@@ -1,13 +1,11 @@
-import type { Server } from "@ns";
+import type { Server } from "@ns"
 
-type Servers = {
-  [key: string]: Server;
-};
+type Servers = Record<string, Server>
 
 export class Network {
-  public upToDate = false;
+  public upToDate = false
 
-  public cavePath : string[] | null = null;
+  public cavePath : string[] | null = null
  
   public servers : Servers = {}
 }
