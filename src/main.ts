@@ -5,5 +5,5 @@ import { Capabilities } from "./Capabilities";
 
 export async function main(ns: NS): Promise<void> {
   const network = refreshNetwork(ns, Capabilities.Basic)
-  ns.tprint(JSON.stringify(network))
+  ns.write("network.txt", JSON.stringify(network, null, 2), "w")
 }

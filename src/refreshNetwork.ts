@@ -20,8 +20,6 @@ export function refreshNetwork(ns: NS, capabilities: Capabilities): Network {
 }
 
 function addToNetwork(ns: NS, capabilities: Capabilities, network: Network, server: string) {
-  ns.tprint(server)
-
   if (server in network.servers) {
     return
   } else {

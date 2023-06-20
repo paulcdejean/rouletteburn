@@ -1,0 +1,13 @@
+{
+  "allowedFiletypes": [".js", ".script", ".txt"],
+  "allowDeletingFiles": false,
+  "port": 12525,
+  "scriptsFolder": "bitburner",
+  "quiet": false,
+  "dry": false,
+  "definitionFile": {
+    "update": false,
+    "location": "NetscriptDefinitions.d.ts"
+  },
+  "pushAllOnConnection": true
+}
