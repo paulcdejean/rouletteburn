@@ -4,8 +4,8 @@
 
 import type { Server } from "@ns"
 import type { NS } from "@ns";
-import { Capabilities } from "@/Capabilities.ts"
-import { home, cave } from "@/constants.ts"
+import { Capabilities } from "@/capabilities/Capabilities"
+import { home, cave } from "@/constants"
 
 type Servers = Record<string, Server>
 

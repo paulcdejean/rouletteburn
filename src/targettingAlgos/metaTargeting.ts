@@ -1,7 +1,7 @@
-import { Capabilities } from "@/Capabilities.ts"
+import { Capabilities } from "@/capabilities/Capabilities"
 import type { NS } from "@ns";
 import { Network } from "@/network.ts"
-import { fastestResults } from "@/targettingAlgos/fastestResults.ts"
+import { fastestResults } from "@/targettingAlgos/fastestResults"
 
 type TargettingAlgo = (ns: NS, network: Network) => string
 

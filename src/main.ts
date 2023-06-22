@@ -1,7 +1,7 @@
 import type { NS } from "@ns"
 
-import { Network, refreshNetwork } from '@/network.ts'
-import { Capabilities } from "@/Capabilities"
+import { Network, refreshNetwork } from '@/network'
+import { Capabilities } from "@/capabilities/Capabilities"
 import { crackNetwork } from "./crack"
 import { sleep } from "./utils"
 
@@ -15,7 +15,17 @@ export async function main(ns: NS): Promise<void> {
 
   refreshNetwork(ns, network, Capabilities.Basic)
 
+  // Runs in the background, terminates when all crackable servers are cracked
   crackNetwork(ns, network, 2000)
+
+  // TODO: Backgrounded server purchasing and upgrading, requires standard functionality
+
+  // TODO: Backgrounded coding contract work, requires standard functionality
+
+  // TODO: Backgrounded quest system
+
+  // Foreground loop
+  //while()
 
   await sleep(30000)
 
@@ -33,8 +43,4 @@ export async function main(ns: NS): Promise<void> {
   farm server if its prepped
     then loop
   */
-
-  // async cracking loop
-
-  // async quest loop (react time lol)
 }

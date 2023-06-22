@@ -1,6 +1,6 @@
 import type { NS } from "@ns";
-import { Network } from "@/network.ts"
-import { noodles } from "@/constants.ts"
+import { Network } from "@/network"
+import { noodles } from "@/constants"
 
 export function fastestResults(ns: NS, network: Network): string {
   let fastestWeakenTime = Infinity
