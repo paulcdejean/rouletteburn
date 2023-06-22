@@ -2,7 +2,6 @@ import type { NS } from "@ns"
 
 import { refreshNetwork } from '@/network.ts'
 import { Capabilities } from "@/Capabilities"
-import { fastestResults } from "@/targettingAlgos/fastestResults.ts"
 import { crackNetwork } from "./crack"
 
 export async function main(ns: NS): Promise<void> {
