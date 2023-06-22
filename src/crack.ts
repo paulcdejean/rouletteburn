@@ -6,7 +6,6 @@ import { NS } from "@ns";
 import { brutessh, ftpcrack, httpworm, nuke, relaysmtp, sqlinject } from "./constants";
 import { Network } from "./network";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function crack(ns: NS, server: string): boolean {
   if (ns.fileExists(brutessh)) {
     ns.brutessh(server)
@@ -29,11 +28,33 @@ function crack(ns: NS, server: string): boolean {
   return ns.hasRootAccess(server)
 }
 
+function everythingIsCracked(network: Network): boolean {
+  let everythingCracked = true
+  for (const server in network.servers) {
+    if (!network.servers[server].hasAdminRights) {
+      everythingCracked = false
+    }
+  }
+  return everythingCracked
+}
+
 /**
- * @function crackNetwork tries to crack all crackable servers every interval ms, terminates once everything is cracked
+ * @function crackNetwork tries to crack all crackable servers every interval ms, terminates once everything is cracked.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function crackNetwork(ns: NS, network: Network, interval: number): void {
-  ns.tprint("Crackin at it!")
-  setTimeout(crackNetwork, interval, ns, network, interval)
+  for (const server in network.servers) {
+    if (!network.servers[server].hasAdminRights) {
+      if(crack(ns, server)) {
+        network.upToDate = false
+      }
+    }
+  }
+
+  ns.tprint("DEBUG: cracking loop")
+
+  if (everythingIsCracked(network)) {
+    return
+  } else {
+    setTimeout(crackNetwork, interval, ns, network, interval)
+  }
 }

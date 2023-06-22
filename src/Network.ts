@@ -11,19 +11,14 @@ type Servers = Record<string, Server>
 
 export class Network {
   public upToDate = false
-
   public cavePath : string[] | null = null
- 
   public servers : Servers = {}
 }
 
-export function refreshNetwork(ns: NS, capabilities: Capabilities): Network {
-  const network = new Network()
-
+export function refreshNetwork(ns: NS, network: Network, capabilities: Capabilities): Network {
+  network.servers = {}
   addToNetwork(ns, capabilities, network, home, [])
-
   network.upToDate = true
-
   return network
 }
 
