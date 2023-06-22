@@ -6,24 +6,55 @@ import { NS } from "@ns";
 import { brutessh, ftpcrack, httpworm, nuke, relaysmtp, sqlinject } from "./constants";
 import { Network } from "./network";
 
-function crack(ns: NS, server: string): boolean {
+function canCrack(ns: NS, server: string): boolean {
+  if (!ns.fileExists(nuke)) {
+    return false
+  }
+
+  let cracksOwned = 0
   if (ns.fileExists(brutessh)) {
-    ns.brutessh(server)
+    cracksOwned = cracksOwned + 1
   }
   if (ns.fileExists(ftpcrack)) {
-    ns.ftpcrack(server)
-  }  
+    cracksOwned = cracksOwned + 1
+  }
   if (ns.fileExists(relaysmtp)) {
-    ns.relaysmtp(server)
+    cracksOwned = cracksOwned + 1
   }
   if (ns.fileExists(httpworm)) {
-    ns.httpworm(server)
+    cracksOwned = cracksOwned + 1
   }
   if (ns.fileExists(sqlinject)) {
-    ns.sqlinject(server)
+    cracksOwned = cracksOwned + 1
   }
-  if (ns.fileExists(nuke)) {
-    ns.nuke(server)
+
+  if (cracksOwned >= ns.getServerNumPortsRequired(server)) {
+    return true
+  } else {
+    return false
+  }
+}
+
+function crack(ns: NS, server: string): boolean {
+  if (canCrack(ns, server)) {
+    if (ns.fileExists(brutessh)) {
+      ns.brutessh(server)
+    }
+    if (ns.fileExists(ftpcrack)) {
+      ns.ftpcrack(server)
+    }  
+    if (ns.fileExists(relaysmtp)) {
+      ns.relaysmtp(server)
+    }
+    if (ns.fileExists(httpworm)) {
+      ns.httpworm(server)
+    }
+    if (ns.fileExists(sqlinject)) {
+      ns.sqlinject(server)
+    }
+    if (ns.fileExists(nuke)) {
+      ns.nuke(server)
+    }
   }
   return ns.hasRootAccess(server)
 }
