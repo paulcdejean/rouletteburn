@@ -5,6 +5,7 @@
   scp; // Essential
   scan; // Essential
   nuke; // Essential
+  fileExists; // Essential
 
   getGrowTime; // Essential
   getHackTime; // Essential
@@ -16,10 +17,10 @@
   httpworm;  // Cracks
   sqlinject; // Cracks
 
-  growthAnalyze; // Expensive
-  hackAnalyze; // Expensive
+  growthAnalyze; // Expensive but needed
+  hackAnalyze; // Expensive but needed
 
-  // getServer; // Too epensive :(
+  // getServer; // Too expensive :(
   getServerMinSecurityLevel;
   getServerRequiredHackingLevel;
   getServerMaxMoney;
@@ -27,4 +28,6 @@
   hasRootAccess;
   getServerNumPortsRequired;
 
+  // getPlayer; // Too expensive :(
+  getHackingLevel;
 }

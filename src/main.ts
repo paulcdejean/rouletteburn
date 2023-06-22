@@ -1,19 +1,21 @@
 import type { NS } from "@ns"
 
 import { Network, refreshNetwork } from '@/network'
-import { Capabilities } from "@/capabilities/Capabilities"
+import { Capabilities, canUpgradeCapabilities } from "@/capabilities/Capabilities"
 import { crackNetwork } from "./crack"
 import { sleep } from "./utils"
+import { metaTargetting } from "./targettingAlgos/metaTargeting"
 
 export async function main(ns: NS): Promise<void> {
   ns.disableLog("ALL") // Prevents spam, forgive the magic word here
 
   // TODO: Get capabilities
+  const capabilities = Capabilities.Basic
   // TODO: Attempt to upgrade capabilities
 
   const network = new Network
 
-  refreshNetwork(ns, network, Capabilities.Basic)
+  refreshNetwork(ns, network, capabilities)
 
   // Runs in the background, terminates when all crackable servers are cracked
   crackNetwork(ns, network, 2000)
@@ -25,9 +27,24 @@ export async function main(ns: NS): Promise<void> {
   // TODO: Backgrounded quest system
 
   // Foreground loop
-  //while()
+  while(!canUpgradeCapabilities(ns)) {
+    if(!network.upToDate) {
+      ns.tprint("DEBUG: Network not up to date, refreshing network")
+      refreshNetwork(ns, network, capabilities)
+    }
+    const target = metaTargetting(ns, capabilities)(ns, network)
 
-  await sleep(30000)
+    ns.tprint(`Farming money from ${target}`)
+
+    // TODO: Get cycle time of target
+
+    // TODO: Simultaniously
+    // 1. Farm the target
+    // 2. Prepare other targets, if there's extra threads
+    // 3. Farm hacking exp (alternatively share to farm rep?), if there's STILL extra threads
+
+    await sleep(5000)
+  }
 
   // TODO
   // crack(ns, network)
