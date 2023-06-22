@@ -3,6 +3,7 @@ import type { NS } from "@ns"
 import { refreshNetwork } from '@/network.ts'
 import { Capabilities } from "@/Capabilities"
 import { fastestResults } from "@/targettingAlgos/fastestResults.ts"
+import { crackNetwork } from "./crack"
 
 export async function main(ns: NS): Promise<void> {
   const network = refreshNetwork(ns, Capabilities.Basic)
@@ -26,5 +27,5 @@ export async function main(ns: NS): Promise<void> {
 
   // async quest loop (react time lol)
   
-  ns.tprint(fastestResults(ns, network))
+  crackNetwork(ns, network, 1000)
 }
