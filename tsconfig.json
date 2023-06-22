@@ -9,6 +9,7 @@
     "noImplicitThis": true,
     "esModuleInterop": true,
     "inlineSourceMap": true,
+    "importHelpers": true,
     "strict": true,
     "rootDir": "src/",
     "outDir": "dist/",

@@ -1,5 +1,5 @@
 import type { NS } from "@ns";
-import { Network } from "@/Network.ts"
+import { Network } from "@/network.ts"
 import { noodles } from "@/constants.ts"
 
 export function fastestResults(ns: NS, network: Network): string {
@@ -8,8 +8,11 @@ export function fastestResults(ns: NS, network: Network): string {
 
   for (const server in network.servers) {
     const weakenTime = ns.getWeakenTime(server)
-    // TODO: && has root && hacking level high enough
-    if (weakenTime < fastestWeakenTime && ns.getServerMaxMoney(server) > 0) {
+
+    if (weakenTime < fastestWeakenTime &&
+      (network.servers[server].moneyMax ?? 0) > 0 &&
+      network.servers[server].hasAdminRights &&
+      (network.servers[server].requiredHackingSkill ?? Infinity) < ns.getHackingLevel()) {
       fastestWeakenTime = weakenTime
       selectedServer = server
     }
