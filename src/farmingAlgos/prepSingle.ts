@@ -23,12 +23,8 @@ function weakenToMinSecurity(ns: NS, farm: Farm) : boolean {
 }
 
 function growToMaxMoney(ns: NS, farm: Farm) : boolean {
-  ns.tprint("DEBUG A")
   const currentMoney = ns.getServerMoneyAvailable(farm.target)
   const maxMoney = ns.getServerMaxMoney(farm.target)
-
-  ns.tprint(currentMoney)
-  ns.tprint(maxMoney)
 
   if (currentMoney < maxMoney) {
     const requiredGrowAmount = maxMoney / currentMoney
