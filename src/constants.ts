@@ -9,3 +9,6 @@ export const sqlinject = "SQLInjectProgram.exe"
 export const nuke = "NUKE.exe"
 export const defaultServerFortifyAmount = 0.002
 export const defaultServerWeakenAmount = 0.05
+export const hackFarmer = "farmers/hack.js"
+export const growFarmer = "farmers/grow.js"
+export const weakenFarmer = "farmers/weaken.js"

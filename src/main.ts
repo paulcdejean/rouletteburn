@@ -40,9 +40,10 @@ export async function main(ns: NS): Promise<void> {
     ns.tprint(`Farming money from ${target}`)
 
 
+    ns.tprint("The servers you have root on are:")
     for (const server in network.servers) {
       if (network.servers[server].hasAdminRights) {
-        ns.tprint(server)
+        ns.tprint(`${server} has max RAM ${network.servers[server].maxRam}`)
       }
     }
     // TODO: Get cycle time of target

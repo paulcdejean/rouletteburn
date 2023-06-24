@@ -1,3 +1,4 @@
+import { growFarmer, hackFarmer, home } from "@/constants";
 import { Network } from "@/network";
 import { growthAnalyzeSecurity, hackAnalyzeSecurity, weakenAnalyze } from "@/utils";
 import { NS } from "@ns";
@@ -12,8 +13,17 @@ class Batch {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function startingHWGW(ns: NS, network: Network, target: string) : Promise<number> {
+  let largestUsableServer = 0
+  for (const server in network.servers) {
+    if (network.servers[server].hasAdminRights && network.servers[server].maxRam > largestUsableServer) {
+      largestUsableServer = network.servers[server].maxRam
+    }
+  }
+
+  const maxFitHackThreads = Math.floor(largestUsableServer / ns.getScriptRam(hackFarmer, home))
+  const maxFitGrowThreads = Math.floor(largestUsableServer / ns.getScriptRam(growFarmer, home))
   
-  ns.tprint(calculateBatchSize(ns, target))
+  ns.tprint(calculateBatchSize(ns, target, maxFitHackThreads, maxFitGrowThreads))
 
   // An example of how to return a correct value, maybe useful later
   return new Promise<number>((resolve) => {
@@ -22,7 +32,7 @@ export function startingHWGW(ns: NS, network: Network, target: string) : Promise
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function calculateBatchSize(ns: NS, target: string) : Batch {
+function calculateBatchSize(ns: NS, target: string, maxFitHackThreads: number, maxFitGrowThreads: number) : Batch {
   const batch = new Batch()
 
   const hackRate = ns.hackAnalyze(target)
@@ -34,11 +44,11 @@ function calculateBatchSize(ns: NS, target: string) : Batch {
   if (growThreadsPerHack < 1) {
     // One grow, multiple hacks
     batch.grow = 1
-    batch.hack = Math.floor(1 / growThreadsPerHack)
+    batch.hack = Math.min(Math.floor(1 / growThreadsPerHack), maxFitHackThreads)
   } else {
     // One hack, multiple grows
     batch.hack = 1
-    batch.grow = Math.floor(growThreadsPerHack)
+    batch.grow = Math.min(Math.floor(growThreadsPerHack), maxFitGrowThreads)
   }
 
   const hackSecurityGain = hackAnalyzeSecurity(ns, batch.hack, target)

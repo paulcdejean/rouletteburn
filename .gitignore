@@ -32,6 +32,3 @@ wasm-pack.log
 
 # intermediate output
 obfuscate/
-
-# final output
-bitburner/
