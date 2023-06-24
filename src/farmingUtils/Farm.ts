@@ -1,6 +1,6 @@
 import { SpawnScript, home, homeReservedRam } from "@/constants"
 import { Network } from "@/network"
-import { NS } from "@ns"
+import { BasicHGWOptions, NS, RunOptions } from "@ns"
 
 // For example a single HWGW
 export type Batch = Operation[]
@@ -8,12 +8,14 @@ export type Batch = Operation[]
 export interface Operation {
   script : SpawnScript
   threads : number
+  // TODO: stonks
 }
 
 interface Spawn {
   script : SpawnScript
   threads : number
   host : string
+  hgwOptions : BasicHGWOptions
 }
 
 export class Farm {
@@ -43,12 +45,21 @@ export class Farm {
 
     for (const server in this.availableRam) {
       if (this.availableRam[server] >= operationScriptRam) {
-        this.availableRam[server] = 0
+        const threads = Math.floor(this.availableRam[server] / operationScriptRam)
+
+        const hgwOptions : BasicHGWOptions = {
+          threads: threads,
+          stock: false,
+          additionalMsec: 0
+        }
+
         this.plan.push({
           script: SpawnScript.weakenFarmer,
-          threads: Math.floor(this.availableRam[server] / operationScriptRam),
+          threads: threads,
           host: server,
+          hgwOptions: hgwOptions,
         })
+        this.availableRam[server] = 0
       }
     }
   }
@@ -56,6 +67,10 @@ export class Farm {
   schedule(ns: NS, batch: Batch) : boolean {
     const simulatedAvailableRam = Object.assign({}, this.availableRam)
     const simulatedPlan : Spawn[] = []
+
+    const weakenTime = ns.getWeakenTime(this.target)
+    const growTime = ns.getGrowTime(this.target)
+    const hackTime = ns.getHackTime(this.target)
 
     for (const operation in batch) {
       const operationScriptRam = ns.getScriptRam(batch[operation].script, home)
@@ -65,12 +80,25 @@ export class Farm {
 
       for (const server in simulatedAvailableRam) {
         if (simulatedAvailableRam[server] >= operationScriptRam * batch[operation].threads) {
-          simulatedAvailableRam[server] = simulatedAvailableRam[server] - (operationScriptRam * batch[operation].threads)
+          let additionalMsec = 0
+          if(batch[operation].script == SpawnScript.hackFarmer) {
+            additionalMsec = weakenTime - hackTime
+          } else if(batch[operation].script == SpawnScript.growFarmer) {
+            additionalMsec = weakenTime - growTime
+          }
+          const hgwOptions : BasicHGWOptions = {
+            threads: batch[operation].threads,
+            stock: false,
+            additionalMsec: additionalMsec
+          }
+
           simulatedPlan.push({
             script: batch[operation].script,
             threads: batch[operation].threads,
             host: server,
+            hgwOptions: hgwOptions,
           })
+          simulatedAvailableRam[server] = simulatedAvailableRam[server] - (operationScriptRam * batch[operation].threads)
           successfulPlan = true
           break
         }
@@ -83,5 +111,24 @@ export class Farm {
     Object.assign(this.availableRam, simulatedAvailableRam)
     this.plan.push(...simulatedPlan)
     return true
+  }
+
+  run(ns: NS) : void {
+    for(const spawn in this.plan) {
+      const runOptions: RunOptions = {
+        preventDuplicates: false,
+        temporary: true,
+        threads: this.plan[spawn].threads
+      }
+
+      setImmediate(ns.exec,
+        this.plan[spawn].script,
+        this.target,
+        runOptions,
+        this.plan[spawn].hgwOptions.additionalMsec ?? 0,
+        this.plan[spawn].hgwOptions.stock ?? false,
+        this.plan[spawn].hgwOptions.threads ?? 1
+      )
+    }
   }
 }

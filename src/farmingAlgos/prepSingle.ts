@@ -1,7 +1,7 @@
 import { SpawnScript } from "@/constants";
 import { Farm } from "@/farmingUtils/Farm";
 import { Network } from "@/network";
-import { weakenAnalyze } from "@/utils";
+import { sleep, weakenAnalyze } from "@/utils";
 import { NS } from "@ns";
 
 
@@ -48,8 +48,10 @@ function growToMaxMoney(ns: NS, farm: Farm) : boolean {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function prepSingle(ns: NS, network: Network, target: string) : Promise<number> {
+export function prepSingle(ns: NS, network: Network, target: string) : Promise<void> {
   const farm = new Farm(ns, network, target)
+
+  const weakenTime = ns.getWeakenTime(farm.target)
 
   if(weakenToMinSecurity(ns, farm)) {
     growToMaxMoney(ns, farm)
@@ -59,13 +61,7 @@ export function prepSingle(ns: NS, network: Network, target: string) : Promise<n
 
   ns.tprint(farm.plan)
 
+  farm.run(ns)
 
-
-  // Schedule a batch the weakens to min security, if that fails just go straight to finalWeaken
-  // Schedule a batch that grows up to the max, keep reducing the grow threads if it fails
-  // Final weaken
-
-  return new Promise<number>(resolve => {
-    resolve(0)
-  })
+  return sleep(weakenTime + 3000)
 }

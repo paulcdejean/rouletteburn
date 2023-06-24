@@ -4,7 +4,7 @@ import { defaultServerFortifyAmount, defaultServerWeakenAmount, home } from "./c
 /**
  * @function sleep Using ns.sleep will cause complaints about concurrent ns function calls.
  */
-export async function sleep(ms : number) {
+export async function sleep(ms : number) : Promise<void> {
   return new Promise(resolve => {
     setTimeout(resolve, ms)
   })
@@ -17,7 +17,7 @@ export function growthAnalyzeSecurity(ns: NS, threads: number, hostname: string,
   if(ns.getServerMaxRam(home) >= 32) {
     return ns.growthAnalyzeSecurity(threads, hostname, cores)
   } else {
-    return  2 * defaultServerFortifyAmount * threads
+    return 2 * defaultServerFortifyAmount * threads
   }
 }
 
@@ -28,7 +28,7 @@ export function hackAnalyzeSecurity(ns: NS, threads: number, hostname: string) {
   if(ns.getServerMaxRam(home) >= 32) {
     return ns.hackAnalyzeSecurity(threads, hostname)
   } else {
-    return  defaultServerFortifyAmount * threads
+    return defaultServerFortifyAmount * threads
   }
 }
 
