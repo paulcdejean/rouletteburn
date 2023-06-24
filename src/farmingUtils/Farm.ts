@@ -32,8 +32,19 @@ export class Farm {
   /**
    * @function finalWeaken Fill all remaining available RAM with weaken calls, to maximize exp gains.
    */
-  finalWeaken(ns: NS, batch: Batch) : void {
-    // TODO
+  finalWeaken(ns: NS) : void {
+    const operationScriptRam = ns.getScriptRam(SpawnScript.weakenFarmer, home)
+
+    for (const server in this.availableRam) {
+      if (this.availableRam[server] >= operationScriptRam) {
+        this.availableRam[server] = 0
+        this.plan.push({
+          script: SpawnScript.weakenFarmer,
+          threads: Math.floor(this.availableRam[server] / operationScriptRam),
+          host: server,
+        })
+      }
+    }
   }
 
   schedule(ns: NS, batch: Batch) : boolean {
