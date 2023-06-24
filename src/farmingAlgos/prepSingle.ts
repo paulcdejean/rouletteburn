@@ -35,7 +35,7 @@ function growToMaxMoney(ns: NS, farm: Farm) : boolean {
     const requiredGrowThreads = Math.ceil(ns.growthAnalyze(farm.target, requiredGrowAmount))
 
     let attemptedGrowThreads = requiredGrowThreads
-    while (attemptedGrowThreads < 0) {
+    while (attemptedGrowThreads > 0) {
       const growSecurityGain = ns.growthAnalyzeSecurity(attemptedGrowThreads)
       const requiredWeakenThreads = Math.ceil(growSecurityGain / weakenAnalyze(ns, 1))
 
@@ -67,7 +67,7 @@ export function prepSingle(ns: NS, network: Network, target: string) : Promise<v
   const weakenTime = ns.getWeakenTime(farm.target)
 
   if(weakenToMinSecurity(ns, farm)) {
-    growToMaxMoney(ns, farm)
+    while(growToMaxMoney(ns, farm));
   }
 
   farm.finalWeaken(ns)

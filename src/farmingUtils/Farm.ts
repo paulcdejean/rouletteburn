@@ -123,7 +123,8 @@ export class Farm {
 
       ns.enableLog("exec")
 
-      const pid = ns.exec(this.plan[spawn].script, this.plan[spawn].host, runOptions, 
+      const pid = ns.exec(this.plan[spawn].script, this.plan[spawn].host, runOptions,
+        this.target,
         this.plan[spawn].hgwOptions.additionalMsec ?? 0,
         this.plan[spawn].hgwOptions.stock ?? false,
         this.plan[spawn].hgwOptions.threads ?? 1
