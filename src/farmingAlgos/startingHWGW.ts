@@ -11,7 +11,7 @@ class Batch {
 
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function shotgunHWGW(ns: NS, network: Network, target: string) : Promise<number> {
+export function startingHWGW(ns: NS, network: Network, target: string) : Promise<number> {
   
   ns.tprint(calculateBatchSize(ns, target))
 
@@ -41,15 +41,15 @@ function calculateBatchSize(ns: NS, target: string) : Batch {
     batch.grow = Math.floor(growThreadsPerHack)
   }
 
-  const hackSecurityGain = hackAnalyzeSecurity(ns, batch.grow, target)
+  const hackSecurityGain = hackAnalyzeSecurity(ns, batch.hack, target)
   const growthSecurityGain = growthAnalyzeSecurity(ns, batch.grow, target)
 
   ns.tprint("hackSecurityGain = ", hackSecurityGain)
   ns.tprint("growthSecurityGain = ", growthSecurityGain)
   ns.tprint("Single weaken = ", weakenAnalyze(ns, 1))
 
-  batch.firstWeaken = Math.floor(weakenAnalyze(ns, 1) / hackAnalyzeSecurity(ns, batch.grow, target))
-  batch.secondWeaken = Math.floor( weakenAnalyze(ns, 1) / growthAnalyzeSecurity(ns, batch.grow, target))
+  batch.firstWeaken = Math.ceil(hackSecurityGain / weakenAnalyze(ns, 1))
+  batch.secondWeaken = Math.ceil(growthSecurityGain / weakenAnalyze(ns, 1))
 
   return batch
 }

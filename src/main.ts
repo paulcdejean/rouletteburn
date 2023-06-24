@@ -45,8 +45,8 @@ export async function main(ns: NS): Promise<void> {
     // 1. Farm the target
     // 2. Prepare other targets, if there's extra threads
     // 3. Farm hacking exp (alternatively share to farm rep?), if there's STILL extra threads
-
-    await sleep(5000)
+    await sleep(1)
+    return
   }
 
   // TODO
