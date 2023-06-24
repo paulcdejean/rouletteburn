@@ -22,11 +22,13 @@
 
   // getServer; // Too expensive :(
   getServerMinSecurityLevel;
+  getServerSecurityLevel;
   getServerRequiredHackingLevel;
   getServerMaxMoney;
   getServerMaxRam;
   hasRootAccess;
   getServerNumPortsRequired;
+  getServerMoneyAvailable;
 
   // getPlayer; // Too expensive :(
   getHackingLevel;

@@ -1,4 +1,4 @@
-import { SpawnScript, home } from "@/constants"
+import { SpawnScript, home, homeReservedRam } from "@/constants"
 import { Network } from "@/network"
 import { NS } from "@ns"
 
@@ -17,14 +17,20 @@ interface Spawn {
 }
 
 export class Farm {
-  availableRam : Record<string, number>
-  plan : Spawn[] = []
+  private availableRam : Record<string, number>
+  public plan : Spawn[] = []
+  public target : string
 
-  constructor(ns: NS, network: Network) {
+  constructor(ns: NS, network: Network, target: string) {
     this.availableRam = {}
+    this.target = target
     for (const server in network.servers) {
       if (network.servers[server].hasAdminRights) {
-        this.availableRam[server] = network.servers[server].maxRam
+        if (server == home) {
+          this.availableRam[server] = Math.max(network.servers[server].maxRam - homeReservedRam, 0)
+        } else {
+          this.availableRam[server] = network.servers[server].maxRam
+        }
       }
     }
   }

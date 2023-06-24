@@ -81,8 +81,6 @@ export function crackNetwork(ns: NS, network: Network, interval: number): void {
     }
   }
 
-  ns.tprint("DEBUG: cracking loop")
-
   if (everythingIsCracked(network)) {
     return
   } else {

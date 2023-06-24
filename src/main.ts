@@ -37,21 +37,6 @@ export async function main(ns: NS): Promise<void> {
 
     await metaFarming(ns, capabilities, target)(ns, network, target)
 
-    ns.tprint(`Farming money from ${target}`)
-
-
-    ns.tprint("The servers you have root on are:")
-    for (const server in network.servers) {
-      if (network.servers[server].hasAdminRights) {
-        ns.tprint(`${server} has max RAM ${network.servers[server].maxRam}`)
-      }
-    }
-    // TODO: Get cycle time of target
-
-    // TODO: Simultaniously
-    // 1. Farm the target
-    // 2. Prepare other targets, if there's extra threads
-    // 3. Farm hacking exp (alternatively share to farm rep?), if there's STILL extra threads
     await sleep(1)
     return
   }
