@@ -1,5 +1,1 @@
-Farming is a 3 step process
-
-1. Pick a target. Targetting changes over time but for the noob script:
-2. Prep the target, if necesary
-3. HWGW the target idk
+Meta farming returns prep only if target's money isn't maxed or target's security isn't min...
