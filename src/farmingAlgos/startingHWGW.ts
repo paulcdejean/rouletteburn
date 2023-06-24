@@ -11,7 +11,6 @@ class Batch {
 }
 
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function startingHWGW(ns: NS, network: Network, target: string) : Promise<number> {
   let largestUsableServer = 0
   for (const server in network.servers) {
@@ -31,7 +30,6 @@ export function startingHWGW(ns: NS, network: Network, target: string) : Promise
   })
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function calculateBatchSize(ns: NS, target: string, maxFitHackThreads: number, maxFitGrowThreads: number) : Batch {
   const batch = new Batch()
 
