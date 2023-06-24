@@ -5,6 +5,7 @@ import { Capabilities, canUpgradeCapabilities } from "@/capabilities/Capabilitie
 import { crackNetwork } from "./crack"
 import { sleep } from "./utils"
 import { metaTargetting } from "./targettingAlgos/metaTargeting"
+import { metaFarming } from "./farmingAlgos/metaFarming"
 
 export async function main(ns: NS): Promise<void> {
   ns.disableLog("ALL") // Prevents spam, forgive the magic word here
@@ -33,6 +34,8 @@ export async function main(ns: NS): Promise<void> {
       refreshNetwork(ns, network, capabilities)
     }
     const target = metaTargetting(ns, capabilities)(ns, network)
+
+    await metaFarming(ns, capabilities, target)(ns, network, target)
 
     ns.tprint(`Farming money from ${target}`)
 

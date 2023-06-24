@@ -7,3 +7,5 @@ export const relaysmtp = "RelaySMTP.exe"
 export const httpworm = "HTTPWorm.exe"
 export const sqlinject = "SQLInjectProgram.exe"
 export const nuke = "NUKE.exe"
+export const defaultServerFortifyAmount = 0.002
+export const defaultServerWeakenAmount = 0.05
