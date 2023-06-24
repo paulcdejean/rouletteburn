@@ -39,6 +39,12 @@ export async function main(ns: NS): Promise<void> {
 
     ns.tprint(`Farming money from ${target}`)
 
+
+    for (const server in network.servers) {
+      if (network.servers[server].hasAdminRights) {
+        ns.tprint(server)
+      }
+    }
     // TODO: Get cycle time of target
 
     // TODO: Simultaniously

@@ -4951,8 +4951,6 @@ export interface NS {
    * @remarks
    * RAM cost: 0 GB
    *
-   * See {@link NS.print | print} for how to add color to your printed strings.
-   *
    * @param args - Value(s) to be printed.
    */
   tprint(...args: any[]): void;
