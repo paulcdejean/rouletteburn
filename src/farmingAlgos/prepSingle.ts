@@ -23,25 +23,38 @@ function weakenToMinSecurity(ns: NS, farm: Farm) : boolean {
 }
 
 function growToMaxMoney(ns: NS, farm: Farm) : boolean {
+  ns.tprint("DEBUG A")
   const currentMoney = ns.getServerMoneyAvailable(farm.target)
   const maxMoney = ns.getServerMaxMoney(farm.target)
 
-  if(currentMoney < maxMoney) {
+  ns.tprint(currentMoney)
+  ns.tprint(maxMoney)
+
+  if (currentMoney < maxMoney) {
     const requiredGrowAmount = maxMoney / currentMoney
     const requiredGrowThreads = Math.ceil(ns.growthAnalyze(farm.target, requiredGrowAmount))
-    const growSecurityGain = ns.growthAnalyzeSecurity(requiredGrowThreads)
-    const requiredWeakenThreads = Math.ceil(growSecurityGain / weakenAnalyze(ns, 1))
 
-    return farm.schedule(ns, [
-      {
-        script: SpawnScript.growFarmer,
-        threads: requiredGrowThreads,
-      },
-      {
-        script: SpawnScript.weakenFarmer,
-        threads: requiredWeakenThreads,
+    let attemptedGrowThreads = requiredGrowThreads
+    while (attemptedGrowThreads < 0) {
+      const growSecurityGain = ns.growthAnalyzeSecurity(attemptedGrowThreads)
+      const requiredWeakenThreads = Math.ceil(growSecurityGain / weakenAnalyze(ns, 1))
+
+      const success = farm.schedule(ns, [
+        {
+          script: SpawnScript.growFarmer,
+          threads: attemptedGrowThreads,
+        },
+        {
+          script: SpawnScript.weakenFarmer,
+          threads: requiredWeakenThreads,
+        }
+      ])
+      if (success) {
+        return true
       }
-    ])
+      attemptedGrowThreads = attemptedGrowThreads - 1
+    }
+    return false
   } else {
     return true
   }

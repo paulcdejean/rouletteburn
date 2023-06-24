@@ -5,7 +5,7 @@
 import type { Server } from "@ns"
 import type { NS } from "@ns";
 import { Capabilities } from "@/capabilities/Capabilities"
-import { home, cave } from "@/constants"
+import { home, cave, SpawnScript } from "@/constants"
 
 type Servers = Record<string, Server>
 
@@ -50,6 +50,10 @@ function addToNetwork(ns: NS, capabilities: Capabilities, network: Network, serv
     } else {
       network.servers[server] = ns.getServer(server)
     }
+
+    Object.values(SpawnScript).forEach(script => {
+      ns.scp(script, server, home)
+    })
 
     const nearbyServers = ns.scan(server)
     nearbyServers.forEach((nearbyServer) => {

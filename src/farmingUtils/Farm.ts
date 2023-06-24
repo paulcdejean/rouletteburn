@@ -121,14 +121,18 @@ export class Farm {
         threads: this.plan[spawn].threads
       }
 
-      setImmediate(ns.exec,
-        this.plan[spawn].script,
-        this.target,
-        runOptions,
+      ns.enableLog("exec")
+
+      const pid = ns.exec(this.plan[spawn].script, this.plan[spawn].host, runOptions, 
         this.plan[spawn].hgwOptions.additionalMsec ?? 0,
         this.plan[spawn].hgwOptions.stock ?? false,
         this.plan[spawn].hgwOptions.threads ?? 1
       )
+
+      if (pid === 0) {
+        return
+        throw new Error(`Exec in farm run failed on host ${this.plan[spawn].host}`)
+      }
     }
   }
 }

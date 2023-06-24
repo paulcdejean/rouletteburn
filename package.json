@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "run-s build:*",
+    "build": "npm run build:lint && npm run build:typescript && npm run build:vite && npm run build:lint && npm run build:obfuscate && npm run build:bootstrap",
     "build:lint": "eslint .",
     "build:typescript": "tsc",
     "build:vite": "vite build",
@@ -18,7 +18,6 @@
     "bitburner-filesync": "^1.1.5",
     "eslint": "^8.43.0",
     "javascript-obfuscator": "^4.0.2",
-    "npm-run-all": "^4.1.5",
     "shx": "^0.3.4",
     "typescript": "~5.0.0",
     "vite": "^4.3.9",
