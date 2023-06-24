@@ -25,7 +25,7 @@ export function startingHWGW(ns: NS, network: Network, target: string) : Promise
   ns.tprint(calculateBatchSize(ns, target, maxFitHackThreads, maxFitGrowThreads))
 
   // An example of how to return a correct value, maybe useful later
-  return new Promise<number>((resolve) => {
+  return new Promise<number>(resolve => {
     resolve(5)
   })
 }

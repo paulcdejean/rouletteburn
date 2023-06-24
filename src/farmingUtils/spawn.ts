@@ -1,6 +1,6 @@
 import { NS, BasicHGWOptions, RunOptions } from "@ns";
 
-export function spawnhack(ns: NS, host: string, hgwOptions: BasicHGWOptions) {
+export function spawn(ns: NS, host: string, farmer: string, hgwOptions: BasicHGWOptions) {
   const runOptions: RunOptions  = {
     preventDuplicates: false,
     temporary: true,

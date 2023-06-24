@@ -12,3 +12,9 @@ export const defaultServerWeakenAmount = 0.05
 export const hackFarmer = "farmers/hack.js"
 export const growFarmer = "farmers/grow.js"
 export const weakenFarmer = "farmers/weaken.js"
+
+export enum SpawnScript {
+  hackFarmer = "farmers/hack.js",
+  growFarmer = "farmers/grow.js",
+  weakenFarmer = "farmers/weaken.js",
+}
