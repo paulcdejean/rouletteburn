@@ -41,9 +41,15 @@ function calculateBatchSize(ns: NS, target: string) : Batch {
     batch.grow = Math.floor(growThreadsPerHack)
   }
 
+  const hackSecurityGain = hackAnalyzeSecurity(ns, batch.grow, target)
+  const growthSecurityGain = growthAnalyzeSecurity(ns, batch.grow, target)
 
-  batch.firstWeaken = Math.floor(hackAnalyzeSecurity(ns, batch.grow, target) / weakenAnalyze(ns, 1))
-  batch.secondWeaken = Math.floor(growthAnalyzeSecurity(ns, batch.grow, target) / weakenAnalyze(ns, 1))
+  ns.tprint("hackSecurityGain = ", hackSecurityGain)
+  ns.tprint("growthSecurityGain = ", growthSecurityGain)
+  ns.tprint("Single weaken = ", weakenAnalyze(ns, 1))
+
+  batch.firstWeaken = Math.floor(weakenAnalyze(ns, 1) / hackAnalyzeSecurity(ns, batch.grow, target))
+  batch.secondWeaken = Math.floor( weakenAnalyze(ns, 1) / growthAnalyzeSecurity(ns, batch.grow, target))
 
   return batch
 }

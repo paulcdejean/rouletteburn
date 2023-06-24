@@ -8,7 +8,7 @@
   "identifierNamesGenerator": "mangled",
   "log": false,
   "numbersToExpressions": false,
-  "renameGlobals": false,
+  "renameGlobals": true,
   "selfDefending": false,
   "simplify": true,
   "splitStrings": false,
