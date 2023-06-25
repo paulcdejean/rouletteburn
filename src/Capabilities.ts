@@ -1,8 +1,18 @@
 import { NS } from "@ns";
+import * as basicFunctions from "@/staticRam"
 
 export const enum Capabilities {
-  Basic = "basic", // 8GB of RAM
-  Standard = "standard", // 32GB of RAM, no BN modifiers
+  Basic = "basic",
+  Hack = "hack",
+  Weaken = "weaken",
+  Grow = "grow"
+}
+
+export const capabilityFunctions = {
+  basic: Object.keys(basicFunctions), // 8GB of RAM
+  hack: ["hack"], // Hack farmer
+  grow: ["grow"], // Grow farmer
+  weaken: ["weaken"], // Weaken farmer
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -5,7 +5,18 @@ import { Network, refreshNetwork } from "@/network";
 import { metaTargetting } from "@/targettingAlgos/metaTargeting";
 import { NS } from "@ns";
 
-export async function mainBasic(ns: NS, capabilities: Capabilities): Promise<void> {
+import * as basicList from "@/staticRam"
+
+export const basicFunctions = Object.keys(basicList)
+
+export async function mainBasic(ns: NS): Promise<void> {
+  const capabilities = Capabilities.Basic
+
+  // Upgrade those capabilities if it makes sense to. Exit if they're upgraded.
+  if(upgradeCapabilities(ns, capabilities)) {
+    return
+  }
+
   const network = new Network
   refreshNetwork(ns, network, capabilities)
 

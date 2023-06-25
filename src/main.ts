@@ -1,9 +1,12 @@
 import type { NS } from "@ns"
 
-import { Capabilities, upgradeCapabilities } from "@/Capabilities"
+import { Capabilities } from "@/Capabilities"
 
 import { mainBasic } from "@/mains/mainBasic"
-import * as basicFunctions from "./staticRam"
+import * as basicFunctions from "@/staticRam"
+import { mainHack } from "./mains/mainHack"
+import { mainGrow } from "./mains/mainGrow"
+import { mainWeaken } from "./mains/mainWeaken"
 
 export async function main(ns: NS): Promise<void> {
   // Prevents spam, forgive the magic word here.
@@ -20,15 +23,22 @@ export async function main(ns: NS): Promise<void> {
     capabilities = ns.args[0] as Capabilities
   }
 
-  // Upgrade those capabilities if it makes sense to. Exit if they're upgraded.
-  if(upgradeCapabilities(ns, capabilities)) {
-    return
-  }
-
   // If capabilities are not upgraded, then get to the main bulk of the code.
   switch(capabilities) {
     case Capabilities.Basic: {
-      await mainBasic(ns, capabilities)
+      await mainBasic(ns)
+      return
+    }
+    case Capabilities.Hack: {
+      await mainHack(ns)
+      return
+    }
+    case Capabilities.Grow: {
+      await mainGrow(ns)
+      return
+    }
+    case Capabilities.Weaken: {
+      await mainWeaken(ns)
       return
     }
   }
