@@ -68,7 +68,8 @@ export class Farm {
     const simulatedAvailableRam = Object.assign({}, this.availableRam)
     const simulatedPlan : Spawn[] = []
 
-    const weakenTime = ns.getWeakenTime(this.target)
+    const weakenTime = Math.ceil(ns.getWeakenTime(this.target))
+    const weakenExtra = weakenTime - ns.getWeakenTime(this.target)
     const growTime = ns.getGrowTime(this.target)
     const hackTime = ns.getHackTime(this.target)
 
@@ -85,6 +86,8 @@ export class Farm {
             additionalMsec = weakenTime - hackTime
           } else if(batch[operation].script == SpawnScript.growFarmer) {
             additionalMsec = weakenTime - growTime
+          } else if(batch[operation].script == SpawnScript.weakenFarmer) {
+            additionalMsec = weakenExtra
           }
           const hgwOptions : BasicHGWOptions = {
             threads: batch[operation].threads,
