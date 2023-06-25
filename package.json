@@ -8,8 +8,7 @@
     "build:lint": "eslint .",
     "build:typescript": "tsc",
     "build:vite": "vite build",
-    "build:obfuscate": "javascript-obfuscator dist/timeburn.js -o obfuscate/timeburn.js --config obfuscator.config.json",
-    "build:bootstrap": "shx cat capabilities/basic.js obfuscate/timeburn.js > bitburner/timeburn.js"
+    "build:obfuscate": "javascript-obfuscator dist/timeburn.js -o bitburner/timeburn.js --config obfuscator.config.json"
   },
   "devDependencies": {
     "@types/node": "^20.3.1",
@@ -18,7 +17,6 @@
     "bitburner-filesync": "^1.1.5",
     "eslint": "^8.43.0",
     "javascript-obfuscator": "^4.0.2",
-    "shx": "^0.3.4",
     "typescript": "~5.0.0",
     "vite": "^4.3.9",
     "vite-plugin-wasm": "^3.2.2"

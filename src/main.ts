@@ -3,10 +3,16 @@ import type { NS } from "@ns"
 import { Capabilities, upgradeCapabilities } from "@/Capabilities"
 
 import { mainBasic } from "@/mains/mainBasic"
+import * as basicFunctions from "./staticRam"
 
 export async function main(ns: NS): Promise<void> {
   // Prevents spam, forgive the magic word here.
   ns.disableLog("ALL")
+
+  // This bit of code prevents tree shaking, which allows for static RAM to be correctly set.
+  if(Object.keys(basicFunctions).length < 0) {
+    throw new Error("This code is unreachable and is designed to be a noop!")
+  }
 
   // Detect what capabilities the script was launched with.
   let capabilities = Capabilities.Basic

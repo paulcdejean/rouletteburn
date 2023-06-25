@@ -13,5 +13,32 @@
   "simplify": true,
   "splitStrings": false,
   "stringArray": false,
-  "unicodeEscapeSequence": false
+  "unicodeEscapeSequence": false,
+  "reservedNames": [
+    "exec",
+    "getScriptRam",
+    "scp",
+    "scan",
+    "nuke",
+    "fileExists",
+    "getGrowTime",
+    "getHackTime",
+    "getWeakenTime",
+    "brutessh",
+    "ftpcrack",
+    "relaysmtp",
+    "httpworm",
+    "sqlinject",
+    "growthAnalyze",
+    "hackAnalyze",
+    "getServerMinSecurityLevel",
+    "getServerSecurityLevel",
+    "getServerRequiredHackingLevel",
+    "getServerMaxMoney",
+    "getServerMaxRam",
+    "hasRootAccess",
+    "getServerNumPortsRequired",
+    "getServerMoneyAvailable",
+    "getHackingLevel"
+  ]
 }

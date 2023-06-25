@@ -1,5 +1,0 @@
-() => {
-  run;
-  getServerMaxRam;
-  getScriptRam;
-}
