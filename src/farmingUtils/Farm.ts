@@ -68,8 +68,11 @@ export class Farm {
     const simulatedAvailableRam = Object.assign({}, this.availableRam)
     const simulatedPlan : Spawn[] = []
 
-    const weakenTime = Math.ceil(ns.getWeakenTime(this.target))
-    const weakenExtra = weakenTime - ns.getWeakenTime(this.target)
+    // Round this to the nearest second, to prevent rounding errors
+    //const weakenTime = Math.ceil(Math.ceil(ns.getWeakenTime(this.target) / 1000) * 1000)
+    //const weakenExtra = weakenTime - ns.getWeakenTime(this.target)
+    const weakenTime = ns.getWeakenTime(this.target)
+    const weakenExtra = 0
     const growTime = ns.getGrowTime(this.target)
     const hackTime = ns.getHackTime(this.target)
 
