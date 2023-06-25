@@ -1,3 +1,4 @@
+import { Capabilities, getCapabilityRam } from "@/Capabilities"
 import { home, homeReservedRam, thisScript } from "@/constants"
 import { Network } from "@/network"
 import { BasicHGWOptions, NS, RunOptions } from "@ns"
@@ -6,13 +7,13 @@ import { BasicHGWOptions, NS, RunOptions } from "@ns"
 export type Batch = Operation[]
 
 export interface Operation {
-  script : string
+  capability : Capabilities
   threads : number
   // TODO: stonks
 }
 
 interface Spawn {
-  script : string
+  capability : Capabilities
   threads : number
   host : string
   hgwOptions : BasicHGWOptions
@@ -54,7 +55,7 @@ export class Farm {
         }
 
         this.plan.push({
-          script: thisScript,
+          capability: Capabilities.Weaken,
           threads: threads,
           host: server,
           hgwOptions: hgwOptions,
@@ -68,14 +69,12 @@ export class Farm {
     const simulatedAvailableRam = Object.assign({}, this.availableRam)
     const simulatedPlan : Spawn[] = []
 
-    // Round this to the nearest ms, to prevent rounding errors???
-    const weakenTime = Math.ceil(ns.getWeakenTime(this.target))
-    // const weakenExtra = weakenTime - ns.getWeakenTime(this.target)
-    // const growTime = ns.getGrowTime(this.target)
+    const weakenTime = ns.getWeakenTime(this.target)
     const hackTime = ns.getHackTime(this.target)
+    const growTime = ns.getGrowTime(this.target)
 
     for (const operation in batch) {
-      const operationScriptRam = ns.getScriptRam(batch[operation].script, home)
+      const operationScriptRam = getCapabilityRam(ns, batch[operation].capability)
       let successfulPlan = false
 
       // TODO: For weaken, allow spreading across multiple servers
@@ -83,8 +82,10 @@ export class Farm {
       for (const server in simulatedAvailableRam) {
         if (simulatedAvailableRam[server] >= operationScriptRam * batch[operation].threads) {
           let additionalMsec = 0
-          if(batch[operation].script == thisScript) {
+          if(batch[operation].capability === Capabilities.Hack) {
             additionalMsec = weakenTime - hackTime
+          } else if(batch[operation].capability == Capabilities.Grow) {
+            additionalMsec = weakenTime - growTime
           }
           const hgwOptions : BasicHGWOptions = {
             threads: batch[operation].threads,
@@ -93,7 +94,7 @@ export class Farm {
           }
 
           simulatedPlan.push({
-            script: batch[operation].script,
+            capability: batch[operation].capability,
             threads: batch[operation].threads,
             host: server,
             hgwOptions: hgwOptions,
@@ -123,7 +124,8 @@ export class Farm {
 
       ns.enableLog("exec")
 
-      const pid = ns.exec(this.plan[spawn].script, this.plan[spawn].host, runOptions,
+      const pid = ns.exec(thisScript, this.plan[spawn].host, runOptions,
+        this.plan[spawn].capability,
         this.target,
         this.plan[spawn].hgwOptions.additionalMsec ?? 0,
         this.plan[spawn].hgwOptions.stock ?? false,

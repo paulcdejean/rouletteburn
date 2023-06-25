@@ -1,7 +1,7 @@
 import { Capabilities } from "@/Capabilities"
 import type { NS } from "@ns";
 import { Network } from "@/network"
-import { prepSingle } from "./prepSingle";
+import { prepSingle } from "@/farmingAlgos/prepSingle";
 
 type FarmingAlgo = (ns: NS, network: Network, target: string) => Promise<void>
 
