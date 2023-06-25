@@ -135,6 +135,7 @@ export class Farm {
       )
 
       if (pid === 0) {
+        ns.tprint((`ERROR: Exec in farm run failed on host ${this.plan[spawn].host}`))
         return
         throw new Error(`Exec in farm run failed on host ${this.plan[spawn].host}`)
       }
