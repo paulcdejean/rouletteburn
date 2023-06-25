@@ -1,3 +1,8 @@
+d0sboots — Today at 11:48 PM
+In order to run, the code must first be compiled
+All scripts are compiled as modules
+This is an async operation
+
 https://nodejs.dev/en/learn/understanding-setimmediate/
 
 Above is useful info to avoid hitching the main thread

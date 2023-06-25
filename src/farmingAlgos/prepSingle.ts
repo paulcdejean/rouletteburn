@@ -52,7 +52,7 @@ function growToMaxMoney(ns: NS, farm: Farm) : boolean {
     }
     return false
   } else {
-    return true
+    return false
   }
 }
 
