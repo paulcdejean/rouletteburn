@@ -1,4 +1,4 @@
-import { SpawnScript, home, homeReservedRam } from "@/constants"
+import { home, homeReservedRam, thisScript } from "@/constants"
 import { Network } from "@/network"
 import { BasicHGWOptions, NS, RunOptions } from "@ns"
 
@@ -6,13 +6,13 @@ import { BasicHGWOptions, NS, RunOptions } from "@ns"
 export type Batch = Operation[]
 
 export interface Operation {
-  script : SpawnScript
+  script : string
   threads : number
   // TODO: stonks
 }
 
 interface Spawn {
-  script : SpawnScript
+  script : string
   threads : number
   host : string
   hgwOptions : BasicHGWOptions
@@ -41,7 +41,7 @@ export class Farm {
    * @function finalWeaken Fill all remaining available RAM with weaken calls, to maximize exp gains.
    */
   finalWeaken(ns: NS) : void {
-    const operationScriptRam = ns.getScriptRam(SpawnScript.weakenFarmer, home)
+    const operationScriptRam = ns.getScriptRam(thisScript, home)
 
     for (const server in this.availableRam) {
       if (this.availableRam[server] >= operationScriptRam) {
@@ -54,7 +54,7 @@ export class Farm {
         }
 
         this.plan.push({
-          script: SpawnScript.weakenFarmer,
+          script: thisScript,
           threads: threads,
           host: server,
           hgwOptions: hgwOptions,
@@ -70,8 +70,8 @@ export class Farm {
 
     // Round this to the nearest ms, to prevent rounding errors???
     const weakenTime = Math.ceil(ns.getWeakenTime(this.target))
-    const weakenExtra = weakenTime - ns.getWeakenTime(this.target)
-    const growTime = ns.getGrowTime(this.target)
+    // const weakenExtra = weakenTime - ns.getWeakenTime(this.target)
+    // const growTime = ns.getGrowTime(this.target)
     const hackTime = ns.getHackTime(this.target)
 
     for (const operation in batch) {
@@ -83,12 +83,8 @@ export class Farm {
       for (const server in simulatedAvailableRam) {
         if (simulatedAvailableRam[server] >= operationScriptRam * batch[operation].threads) {
           let additionalMsec = 0
-          if(batch[operation].script == SpawnScript.hackFarmer) {
+          if(batch[operation].script == thisScript) {
             additionalMsec = weakenTime - hackTime
-          } else if(batch[operation].script == SpawnScript.growFarmer) {
-            additionalMsec = weakenTime - growTime
-          } else if(batch[operation].script == SpawnScript.weakenFarmer) {
-            additionalMsec = weakenExtra
           }
           const hgwOptions : BasicHGWOptions = {
             threads: batch[operation].threads,

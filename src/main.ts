@@ -1,58 +1,29 @@
 import type { NS } from "@ns"
 
-import { Network, refreshNetwork } from '@/network'
-import { Capabilities, canUpgradeCapabilities } from "@/capabilities/Capabilities"
-import { crackNetwork } from "./crack"
-import { sleep } from "./utils"
-import { metaTargetting } from "./targettingAlgos/metaTargeting"
-import { metaFarming } from "./farmingAlgos/metaFarming"
+import { Capabilities, upgradeCapabilities } from "@/Capabilities"
+
+import { mainBasic } from "@/mains/mainBasic"
 
 export async function main(ns: NS): Promise<void> {
-  ns.disableLog("ALL") // Prevents spam, forgive the magic word here
+  // Prevents spam, forgive the magic word here.
+  ns.disableLog("ALL")
 
-  // TODO: Get capabilities
-  const capabilities = Capabilities.Basic
-  // TODO: Attempt to upgrade capabilities
+  // Detect what capabilities the script was launched with.
+  let capabilities = Capabilities.Basic
+  if(ns.args.length > 0) {
+    capabilities = ns.args[0] as Capabilities
+  }
 
-  const network = new Network
-
-  refreshNetwork(ns, network, capabilities)
-
-  // Runs in the background, terminates when all crackable servers are cracked
-  crackNetwork(ns, network, 2000)
-
-  // TODO: Backgrounded server purchasing and upgrading, requires standard functionality
-
-  // TODO: Backgrounded coding contract work, requires standard functionality
-
-  // TODO: Backgrounded quest system
-
-  // Foreground loop
-  while(!canUpgradeCapabilities(ns)) {
-    if(!network.upToDate) {
-      ns.tprint("DEBUG: Network not up to date, refreshing network")
-      refreshNetwork(ns, network, capabilities)
-    }
-    const target = metaTargetting(ns, capabilities)(ns, network)
-
-    await metaFarming(ns, capabilities, target)(ns, network, target)
-
-    await sleep(1)
+  // Upgrade those capabilities if it makes sense to. Exit if they're upgraded.
+  if(upgradeCapabilities(ns, capabilities)) {
     return
   }
 
-  // TODO
-  // crack(ns, network)
-
-  // async farm loop
-  /*
-  pick a targetting algo
-    this will be heurestic nonsense
-  pick a farming algo
-    just hwgw until later
-  prep server if not already prepped
-    loop here
-  farm server if its prepped
-    then loop
-  */
+  // If capabilities are not upgraded, then get to the main bulk of the code.
+  switch(capabilities) {
+    case Capabilities.Basic: {
+      await mainBasic(ns, capabilities)
+      return
+    }
+  }
 }

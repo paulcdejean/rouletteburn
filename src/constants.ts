@@ -13,9 +13,4 @@ export const hackFarmer = "farmers/hack.js"
 export const growFarmer = "farmers/grow.js"
 export const weakenFarmer = "farmers/weaken.js"
 export const homeReservedRam = 256
-
-export enum SpawnScript {
-  hackFarmer = "farmers/hack.js",
-  growFarmer = "farmers/grow.js",
-  weakenFarmer = "farmers/weaken.js",
-}
+export const thisScript = "timeburn.js"

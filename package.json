@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "npm run build:lint && npm run build:typescript && npm run build:vite && npm run build:lint && npm run build:obfuscate && npm run build:bootstrap",
+    "build": "npm run build:lint && npm run build:typescript && npm run build:vite && npm run build:lint && npm run build:obfuscate",
     "build:lint": "eslint .",
     "build:typescript": "tsc",
     "build:vite": "vite build",

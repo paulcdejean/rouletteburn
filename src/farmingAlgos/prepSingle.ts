@@ -1,4 +1,4 @@
-import { SpawnScript } from "@/constants";
+import { thisScript } from "@/constants";
 import { Farm } from "@/farmingUtils/Farm";
 import { Network } from "@/network";
 import { sleep, weakenAnalyze } from "@/utils";
@@ -14,7 +14,7 @@ function weakenToMinSecurity(ns: NS, farm: Farm) : boolean {
     const requiredWeakenThreads = Math.ceil(requiredWeakenAmount / weakenAnalyze(ns, 1))
 
     return farm.schedule(ns, [{
-      script: SpawnScript.weakenFarmer,
+      script: thisScript,
       threads: requiredWeakenThreads,
     }])
   } else {
@@ -37,11 +37,11 @@ function growToMaxMoney(ns: NS, farm: Farm) : boolean {
 
       const success = farm.schedule(ns, [
         {
-          script: SpawnScript.growFarmer,
+          script: thisScript,
           threads: attemptedGrowThreads,
         },
         {
-          script: SpawnScript.weakenFarmer,
+          script: thisScript,
           threads: requiredWeakenThreads,
         }
       ])

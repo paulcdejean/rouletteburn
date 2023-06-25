@@ -1,4 +1,4 @@
-import { Capabilities } from "@/capabilities/Capabilities"
+import { Capabilities } from "@/Capabilities"
 import type { NS } from "@ns";
 import { Network } from "@/network"
 import { fastestResults } from "@/targettingAlgos/fastestResults"

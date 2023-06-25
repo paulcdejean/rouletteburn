@@ -2,3 +2,4 @@ Bring workers into main script lol
 
 Meta farming returns prep only if target's money isn't maxed or target's security isn't min...
 
+Bring capabilities inside the code
