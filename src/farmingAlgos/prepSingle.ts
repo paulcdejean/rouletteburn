@@ -1,5 +1,5 @@
 import { Capabilities } from "@/Capabilities";
-import { Farm } from "@/farmingUtils/Farm";
+import { Farm } from "@/Farm";
 import { Network } from "@/network";
 import { sleep, weakenAnalyze } from "@/utils";
 import { NS } from "@ns";

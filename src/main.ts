@@ -4,9 +4,9 @@ import { Capabilities } from "@/Capabilities"
 
 import { mainBasic } from "@/mains/mainBasic"
 import * as basicFunctions from "@/staticRam"
-import { mainHack } from "./mains/mainHack"
-import { mainGrow } from "./mains/mainGrow"
-import { mainWeaken } from "./mains/mainWeaken"
+import { mainHack } from "@/mains/mainHack"
+import { mainGrow } from "@/mains/mainGrow"
+import { mainWeaken } from "@/mains/mainWeaken"
 
 export async function main(ns: NS): Promise<void> {
   // Prevents spam, forgive the magic word here.
