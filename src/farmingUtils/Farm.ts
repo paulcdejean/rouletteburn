@@ -17,6 +17,7 @@ interface Spawn {
   threads : number
   host : string
   hgwOptions : BasicHGWOptions
+  ram : number
 }
 
 export class Farm {
@@ -54,11 +55,14 @@ export class Farm {
           additionalMsec: 0
         }
 
+        const weakenRam = getCapabilityRam(ns, Capabilities.Weaken)
+
         this.plan.push({
           capability: Capabilities.Weaken,
           threads: threads,
           host: server,
           hgwOptions: hgwOptions,
+          ram: weakenRam,
         })
         this.availableRam[server] = 0
       }
@@ -98,6 +102,7 @@ export class Farm {
             threads: batch[operation].threads,
             host: server,
             hgwOptions: hgwOptions,
+            ram: operationScriptRam,
           })
           simulatedAvailableRam[server] = simulatedAvailableRam[server] - (operationScriptRam * batch[operation].threads)
           successfulPlan = true
@@ -119,7 +124,8 @@ export class Farm {
       const runOptions: RunOptions = {
         preventDuplicates: false,
         temporary: true,
-        threads: this.plan[spawn].threads
+        threads: this.plan[spawn].threads,
+        ramOverride: this.plan[spawn].ram
       }
 
       ns.enableLog("exec")
