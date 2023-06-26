@@ -33,7 +33,5 @@ export async function mainBasic(ns: NS): Promise<void> {
     const target = metaTargetting(ns, capabilities)(ns, network)
 
     await metaFarming(ns, capabilities, target)(ns, network, target)
-
-    return
   }
 }
