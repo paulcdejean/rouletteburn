@@ -1,6 +1,7 @@
 import { noodles } from "@/constants"
 import { Network } from "@/network"
 import { NS } from "@ns"
+import { canSingleCycleWeaken } from "./utils"
 
 export function largestMaxMoneyPerSecondUnderThreeMinutes(ns: NS, network: Network): string {
   let score = 0
@@ -14,7 +15,8 @@ export function largestMaxMoneyPerSecondUnderThreeMinutes(ns: NS, network: Netwo
     if (weakenTime < threeMinutes &&
       serverMoneyMax > score &&
       network.servers[server].hasAdminRights &&
-      (network.servers[server].requiredHackingSkill ?? Infinity) < ns.getHackingLevel()) {
+      (network.servers[server].requiredHackingSkill ?? Infinity) < ns.getHackingLevel() &&
+      canSingleCycleWeaken(ns, network, server)) {
         score = serverMoneyMax / weakenTime
       selectedServer = server
     }
