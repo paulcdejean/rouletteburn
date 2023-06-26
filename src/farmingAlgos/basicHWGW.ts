@@ -5,6 +5,7 @@ import { growthAnalyzeSecurity, hackAnalyzeSecurity, sleep, weakenAnalyze } from
 import { NS } from "@ns";
 
 export function basicHWGW(ns: NS, network: Network, target: string) : Promise<void> {
+  ns.tprint(`Running farming algorithm "prepSingle"`)
   const farm = new Farm(ns, network, target)
 
   const weakenTime = ns.getWeakenTime(farm.target)
@@ -40,6 +41,7 @@ export function basicHWGW(ns: NS, network: Network, target: string) : Promise<vo
     }
   }
 
+  farm.finalWeaken(ns)
   farm.run(ns)
 
   return sleep(weakenTime + 3000)

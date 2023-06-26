@@ -4,7 +4,6 @@ import { Network } from "@/network";
 import { sleep, weakenAnalyze } from "@/utils";
 import { NS } from "@ns";
 
-
 function weakenToMinSecurity(ns: NS, farm: Farm) : boolean {
   const currentSecurity = ns.getServerSecurityLevel(farm.target)
   const minSecurity = ns.getServerMinSecurityLevel(farm.target)
@@ -56,8 +55,8 @@ function growToMaxMoney(ns: NS, farm: Farm) : boolean {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function prepSingle(ns: NS, network: Network, target: string) : Promise<void> {
+  ns.tprint(`Running farming algorithm "prepSingle"`)
   const farm = new Farm(ns, network, target)
 
   const weakenTime = ns.getWeakenTime(farm.target)
