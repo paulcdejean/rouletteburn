@@ -19,5 +19,6 @@ export function largestUnderThreeMinutes(ns: NS, network: Network): string {
       selectedServer = server
     }
   }
+  ns.tprint(`Selected target ${selectedServer} with targetting algorithm "largestUnderThreeMinutes"`)
   return selectedServer
 }

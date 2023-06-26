@@ -17,5 +17,6 @@ export function fastestResults(ns: NS, network: Network): string {
       selectedServer = server
     }
   }
+  ns.tprint(`Selected target ${selectedServer} with targetting algorithm "fastestResults"`)
   return selectedServer
 }

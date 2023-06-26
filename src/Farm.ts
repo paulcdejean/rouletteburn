@@ -43,7 +43,7 @@ export class Farm {
    * @function finalWeaken Fill all remaining available RAM with weaken calls, to maximize exp gains.
    */
   finalWeaken(ns: NS) : void {
-    const operationScriptRam = ns.getScriptRam(thisScript, home)
+    const operationScriptRam = getCapabilityRam(ns, Capabilities.Weaken)
 
     for (const server in this.availableRam) {
       if (this.availableRam[server] >= operationScriptRam) {
