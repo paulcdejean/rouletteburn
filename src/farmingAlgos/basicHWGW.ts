@@ -22,7 +22,7 @@ export function basicHWGW(ns: NS, network: Network, target: string) : Promise<vo
     hackThreads = Math.floor(1 / growThreadsPerHack)
   } else {
     // One hack, multiple grows
-    growThreads = Math.floor(growThreadsPerHack)
+    growThreads = Math.ceil(growThreadsPerHack)
   }
 
   while(hackThreads > 0) {
