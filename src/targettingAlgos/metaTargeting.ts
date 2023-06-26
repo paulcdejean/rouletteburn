@@ -1,8 +1,7 @@
 import { Capabilities } from "@/Capabilities"
 import type { NS } from "@ns";
 import { Network } from "@/network"
-import { fastestResults } from "@/targettingAlgos/fastestResults"
-import { largestUnderThreeMinutes } from "./largestUnderThreeMinutes";
+import { largestMaxMoneyPerSecondUnderThreeMinutes, fastestResults } from "@/targettingAlgos/heuristics";
 
 type TargettingAlgo = (ns: NS, network: Network) => string
 
@@ -11,6 +10,6 @@ export function metaTargetting(ns: NS, capabilities: Capabilities) : TargettingA
   if (ns.getTimeSinceLastAug() < 300000) {
     return fastestResults
   } else {
-    return largestUnderThreeMinutes
+    return largestMaxMoneyPerSecondUnderThreeMinutes
   }
 }
