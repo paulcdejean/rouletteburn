@@ -14,7 +14,7 @@ export async function sleep(ms : number) : Promise<void> {
  * @function growthAnalyzeSecurity Real growthAnalyzeSecurity costs too much RAM for early game.
  */
 export function growthAnalyzeSecurity(ns: NS, threads: number, hostname: string, cores?: number) {
-  if(ns.getServerMaxRam(home) >= 32) {
+  if(ns.getServerMaxRam(home) >= 256) {
     return ns.growthAnalyzeSecurity(threads, hostname, cores)
   } else {
     return 2 * defaultServerFortifyAmount * threads
@@ -25,7 +25,7 @@ export function growthAnalyzeSecurity(ns: NS, threads: number, hostname: string,
  * @function hackAnalyzeSecurity Real growthAnalyzeSecurity costs too much RAM for early game.
  */
 export function hackAnalyzeSecurity(ns: NS, threads: number, hostname: string) {
-  if(ns.getServerMaxRam(home) >= 32) {
+  if(ns.getServerMaxRam(home) >= 256) {
     return ns.hackAnalyzeSecurity(threads, hostname)
   } else {
     return defaultServerFortifyAmount * threads
@@ -36,7 +36,7 @@ export function hackAnalyzeSecurity(ns: NS, threads: number, hostname: string) {
  * @function weakenAnalyze Real weakenAnalyze costs too much RAM for early game.
  */
 export function weakenAnalyze(ns: NS, threads: number, cores?: number) {
-  if(ns.getServerMaxRam(home) >= 32) {
+  if(ns.getServerMaxRam(home) >= 256) {
     return ns.weakenAnalyze(threads, cores)
   } else {
     return defaultServerWeakenAmount * threads

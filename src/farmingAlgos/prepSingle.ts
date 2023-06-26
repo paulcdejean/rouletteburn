@@ -56,7 +56,7 @@ function growToMaxMoney(ns: NS, farm: Farm) : boolean {
 }
 
 export function prepSingle(ns: NS, network: Network, target: string) : Promise<void> {
-  ns.tprint(`Running farming algorithm "prepSingle"`)
+  ns.tprint(`Running farming algorithm "prepSingle" on target ${target}`)
   const farm = new Farm(ns, network, target)
 
   const weakenTime = ns.getWeakenTime(farm.target)

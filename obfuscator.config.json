@@ -39,6 +39,7 @@
     "^hasRootAccess$",
     "^getServerNumPortsRequired$",
     "^getServerMoneyAvailable$",
-    "^getHackingLevel$"
+    "^getHackingLevel$",
+    "^getTimeSinceLastAug$"
   ]
 }

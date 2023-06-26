@@ -34,3 +34,6 @@ export const getServerMoneyAvailable = 0;
 
 // getPlayer is too expensive.
 export const getHackingLevel = 0;
+
+// Cheap and helps with targetting.
+export const getTimeSinceLastAug = 0;
