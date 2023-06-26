@@ -10,7 +10,7 @@ import { mainWeaken } from "@/mains/mainWeaken"
 
 export async function main(ns: NS): Promise<void> {
   // Prevents spam, forgive the magic word here.
-  //ns.disableLog("ALL")
+  ns.disableLog("ALL")
 
   // This bit of code prevents tree shaking, which allows for static RAM to be correctly set.
   if(Object.keys(basicFunctions).length < 0) {

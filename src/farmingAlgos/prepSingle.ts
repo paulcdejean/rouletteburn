@@ -67,8 +67,6 @@ export function prepSingle(ns: NS, network: Network, target: string) : Promise<v
 
   farm.finalWeaken(ns)
 
-  ns.tprint(farm.plan)
-
   farm.run(ns)
 
   return sleep(weakenTime + 3000)
