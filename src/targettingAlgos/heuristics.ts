@@ -3,7 +3,7 @@ import { Network } from "@/network"
 import { NS } from "@ns"
 
 export function largestMaxMoneyPerSecondUnderThreeMinutes(ns: NS, network: Network): string {
-  let largest = 0
+  let score = 0
   const threeMinutes = 180000
   let selectedServer = noodles
 
@@ -12,10 +12,10 @@ export function largestMaxMoneyPerSecondUnderThreeMinutes(ns: NS, network: Netwo
     const serverMoneyMax = network.servers[server].moneyMax ?? 0
 
     if (weakenTime < threeMinutes &&
-      serverMoneyMax > largest &&
+      serverMoneyMax > score &&
       network.servers[server].hasAdminRights &&
       (network.servers[server].requiredHackingSkill ?? Infinity) < ns.getHackingLevel()) {
-        largest = serverMoneyMax / weakenTime
+        score = serverMoneyMax / weakenTime
       selectedServer = server
     }
   }
