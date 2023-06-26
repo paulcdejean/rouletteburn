@@ -5,6 +5,7 @@ export const weakenFunctions = [
 ]
 
 export async function mainWeaken(ns: NS) : Promise<void> {
+  ns.enableLog("weaken")
   ns.tprint("weaken started")
   await ns.weaken(ns.args[1] as string, {
     additionalMsec: ns.args[2] as number,

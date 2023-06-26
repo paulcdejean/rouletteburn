@@ -5,6 +5,7 @@ export const hackFunctions = [
 ]
 
 export async function mainHack(ns: NS) : Promise<void> {
+  ns.enableLog("hack")
   ns.tprint("hack started")
   await ns.hack(ns.args[1] as string, {
     additionalMsec: ns.args[2] as number,

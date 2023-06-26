@@ -3,7 +3,6 @@
 // Having a static RAM of around 8GB is ideal. Small enough to launch on a new save, but still having basic functionality.
 
 export const exec = 0; // Essential.
-export const getScriptRam = 0; // Essential for capabilities upgrading logic.
 
 export const scp = 0; // Essential.
 export const scan = 0; // Essential.
