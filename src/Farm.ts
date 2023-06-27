@@ -32,11 +32,13 @@ interface Spawn {
 export class Farm {
   private availableRam : Record<string, number>
   private plan : Spawn[] = []
+  private cycleTime : number
   public target : string
 
   constructor(ns: NS, network: Network, target: string) {
     this.availableRam = {}
     this.target = target
+    this.cycleTime = ns.getWeakenTime(this.target)
     for (const server in network.servers) {
       if (network.servers[server].hasAdminRights) {
         if (server == home) {
@@ -52,12 +54,12 @@ export class Farm {
    * @function finalWeaken Fill all remaining available RAM with weaken calls, to maximize exp gains.
    */
   finalWeaken(ns: NS) : number {
-    const operationScriptRam = getCapabilityRam(ns, Capabilities.Weaken)
+    const weakenRam = getCapabilityRam(ns, Capabilities.Weaken)
     let totalThreads = 0
 
     for (const server in this.availableRam) {
-      if (this.availableRam[server] >= operationScriptRam) {
-        const threads = Math.floor(this.availableRam[server] / operationScriptRam)
+      if (this.availableRam[server] >= weakenRam) {
+        const threads = Math.floor(this.availableRam[server] / weakenRam)
 
         const hgwOptions : BasicHGWOptions = {
           threads: threads,
@@ -65,14 +67,46 @@ export class Farm {
           additionalMsec: 0
         }
 
-        const weakenRam = getCapabilityRam(ns, Capabilities.Weaken)
-
         this.plan.push({
           capability: Capabilities.Weaken,
           threads: threads,
           host: server,
           hgwOptions: hgwOptions,
           ram: weakenRam,
+        })
+        this.availableRam[server] = 0
+        totalThreads = totalThreads + threads
+      }
+    }
+    return totalThreads
+  }
+
+  /**
+   * @function quickHack Fill all remaining available RAM with hack calls, which has some niche uses.
+   */
+  quickHack(ns: NS) : number {
+    const hackRam = getCapabilityRam(ns, Capabilities.Hack)
+    let totalThreads = 0
+
+    // Override the cycle time
+    this.cycleTime = ns.getHackTime(this.target)
+
+    for (const server in this.availableRam) {
+      if (this.availableRam[server] >= hackRam) {
+        const threads = Math.floor(this.availableRam[server] / hackRam)
+
+        const hgwOptions : BasicHGWOptions = {
+          threads: threads,
+          stock: false,
+          additionalMsec: 0
+        }
+
+        this.plan.push({
+          capability: Capabilities.Hack,
+          threads: threads,
+          host: server,
+          hgwOptions: hgwOptions,
+          ram: hackRam,
         })
         this.availableRam[server] = 0
         totalThreads = totalThreads + threads
@@ -159,8 +193,6 @@ export class Farm {
   }
 
   run(ns: NS) : Promise<void> {
-    const weakenTime = ns.getWeakenTime(this.target)
-
     for(const spawn in this.plan) {
       const runOptions: RunOptions = {
         preventDuplicates: false,
@@ -185,7 +217,7 @@ export class Farm {
       }
     }
 
-    return sleep(weakenTime + 500)
+    return sleep(this.cycleTime + 500)
   }
 
   getStats(ns: NS) : FarmStats {

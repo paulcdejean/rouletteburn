@@ -39,7 +39,8 @@ export async function mainBasic(ns: NS): Promise<void> {
       }
     }
 
-    const target = metaTargeting(ns, capabilities)(ns, network)
+    let target = metaTargeting(ns, capabilities)(ns, network)
+    target = "foodnstuff"
     const farm = metaFarming(ns, capabilities, target)(ns, network, target)
 
     ns.tprint(`Farming ${target}`)

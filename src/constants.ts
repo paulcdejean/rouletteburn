@@ -1,6 +1,7 @@
 export const home = "home"
 export const cave = "The-Cave"
 export const noodles = "n00dles"
+export const foodnstuff = "foodnstuff"
 export const brutessh = "BruteSSH.exe"
 export const ftpcrack = "FTPCrack.exe"
 export const relaysmtp = "RelaySMTP.exe"

@@ -4,8 +4,9 @@ import { Network } from "@/network"
 import { prepSingle } from "@/farmingAlgos/prepSingle";
 import { basicHWGW } from "@/farmingAlgos/basicHWGW";
 import { Farm } from "@/Farm";
-import { noodles } from "@/constants";
+import { foodnstuff, noodles } from "@/constants";
 import { noodlesHGW } from "./noodlesHGW";
+import { quickHack } from "./quickHack";
 
 type FarmingAlgo = (ns: NS, network: Network, target: string) => Farm
 
@@ -19,6 +20,9 @@ export function metaFarming(ns: NS, capabilities: Capabilities, target: string) 
     if (target === noodles) {
       ns.tprint(`Farming target ${target} with algorithm "noodlesHGW"`)
       return noodlesHGW
+    }  else if (target === foodnstuff) {
+      ns.tprint(`Farming target ${target} with algorithm "quickHack"`)
+      return quickHack
     } else {
       ns.tprint(`Farming target ${target} with algorithm "basicHWGW"`)
       return basicHWGW
