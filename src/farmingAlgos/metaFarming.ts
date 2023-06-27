@@ -12,6 +12,10 @@ type FarmingAlgo = (ns: NS, network: Network, target: string) => Farm
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function metaFarming(ns: NS, capabilities: Capabilities, target: string) : FarmingAlgo {
+  if (target === foodnstuff) {
+    return quickHack
+  }
+
   if(ns.getServerMinSecurityLevel(target) !== ns.getServerSecurityLevel(target) ||
   ns.getServerMoneyAvailable(target) !== ns.getServerMaxMoney(target)) {
     ns.tprint(`Farming target ${target} with algorithm "prepSingle"`)
@@ -20,9 +24,6 @@ export function metaFarming(ns: NS, capabilities: Capabilities, target: string) 
     if (target === noodles) {
       ns.tprint(`Farming target ${target} with algorithm "noodlesHGW"`)
       return noodlesHGW
-    }  else if (target === foodnstuff) {
-      ns.tprint(`Farming target ${target} with algorithm "quickHack"`)
-      return quickHack
     } else {
       ns.tprint(`Farming target ${target} with algorithm "basicHWGW"`)
       return basicHWGW

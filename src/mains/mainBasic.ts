@@ -39,12 +39,12 @@ export async function mainBasic(ns: NS): Promise<void> {
       }
     }
 
-    let target = metaTargeting(ns, capabilities)(ns, network)
-    target = "foodnstuff"
+    const target = metaTargeting(ns, capabilities)(ns, network)
     const farm = metaFarming(ns, capabilities, target)(ns, network, target)
 
     ns.tprint(`Farming ${target}`)
     await farm.run(ns)
-    ns.tprint("Farming complete")
+    const timestamp = ns.tFormat(ns.getResetInfo().lastAugReset)
+    ns.tprint(`Farming ${target} complete at ${timestamp}`)
   }
 }
