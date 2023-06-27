@@ -124,21 +124,23 @@ export class Farm {
           // If spread is allowed just spread things wherever
           let attemptingThreads = currentThreads - 1
           while (attemptingThreads > 0) {
-            if (simulatedAvailableRam[server] >= operationScriptRam * currentThreads) {
+            if (simulatedAvailableRam[server] >= operationScriptRam * attemptingThreads) {
               const hgwOptions : BasicHGWOptions = {
-                threads: currentThreads,
+                threads: attemptingThreads,
                 stock: false,
                 additionalMsec: additionalMsec
               }
   
               simulatedPlan.push({
                 capability: batch[operation].capability,
-                threads: currentThreads,
+                threads: attemptingThreads,
                 host: server,
                 hgwOptions: hgwOptions,
                 ram: operationScriptRam,
               })
+              simulatedAvailableRam[server] = simulatedAvailableRam[server] - (operationScriptRam * attemptingThreads)
               currentThreads = currentThreads - attemptingThreads
+              break
             }
             attemptingThreads = attemptingThreads - 1
           }
