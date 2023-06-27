@@ -5,6 +5,8 @@ import { growthAnalyzeSecurity, hackAnalyzeSecurity, weakenAnalyze } from "@/uti
 import { NS } from "@ns";
 
 export function noodlesHGW(ns: NS, network: Network, target: string) : Farm {
+  const noodlesFuzzFactor = 1 // Totally made up heuristic...
+
   ns.tprint(`Running farming algorithm "noodlesHGW" on target ${target}`)
   const farm = new Farm(ns, network, target)
 
@@ -17,7 +19,7 @@ export function noodlesHGW(ns: NS, network: Network, target: string) : Farm {
 
   if (growThreadsPerHack < 1) {
     // One grow, multiple hacks
-    hackThreads = Math.floor(1 / growThreadsPerHack)
+    hackThreads = Math.floor(1 / growThreadsPerHack) - noodlesFuzzFactor
   } else {
     // One hack, multiple grows
     growThreads = Math.ceil(growThreadsPerHack)
