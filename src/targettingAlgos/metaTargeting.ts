@@ -6,6 +6,7 @@ import { fastestResults } from "@/targettingAlgos/heuristics";
 type TargettingAlgo = (ns: NS, network: Network) => string
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function metaTargetting(ns: NS, capabilities: Capabilities) : TargettingAlgo {
+export function metaTargeting(ns: NS, capabilities: Capabilities) : TargettingAlgo {
+  ns.tprint("Using targetting algorithm fastestResults")
   return fastestResults
 }

@@ -13,11 +13,14 @@ type FarmingAlgo = (ns: NS, network: Network, target: string) => Farm
 export function metaFarming(ns: NS, capabilities: Capabilities, target: string) : FarmingAlgo {
   if(ns.getServerMinSecurityLevel(target) !== ns.getServerSecurityLevel(target) ||
   ns.getServerMoneyAvailable(target) !== ns.getServerMaxMoney(target)) {
+    ns.tprint(`Farming target ${target} with algorithm "prepSingle"`)
     return prepSingle
   } else {
     if (target === noodles) {
+      ns.tprint(`Farming target ${target} with algorithm "noodlesHGW"`)
       return noodlesHGW
     } else {
+      ns.tprint(`Farming target ${target} with algorithm "basicHWGW"`)
       return basicHWGW
     }
   }
