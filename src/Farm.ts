@@ -2,6 +2,7 @@ import { Capabilities, getCapabilityRam } from "@/Capabilities"
 import { home, homeReservedRam, thisScript } from "@/constants"
 import { Network } from "@/network"
 import { BasicHGWOptions, NS, RunOptions } from "@ns"
+import { sleep } from "./utils"
 
 // For example a single HWGW
 export type Batch = Operation[]
@@ -157,7 +158,9 @@ export class Farm {
     return true
   }
 
-  run(ns: NS) : void {
+  run(ns: NS) : Promise<void> {
+    const weakenTime = ns.getWeakenTime(this.target)
+
     for(const spawn in this.plan) {
       const runOptions: RunOptions = {
         preventDuplicates: false,
@@ -178,9 +181,11 @@ export class Farm {
 
       if (pid === 0) {
         ns.tprint(`ERROR: Exec in farm run failed on host ${this.plan[spawn].host}`)
-        return
+        return sleep(0)
       }
     }
+
+    return sleep(weakenTime + 500)
   }
 
   getStats(ns: NS) : FarmStats {

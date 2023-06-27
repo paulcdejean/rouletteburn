@@ -31,7 +31,7 @@ export function basicHWGW(ns: NS, network: Network, target: string) : Farm {
     const batch = [
       {capability: Capabilities.Hack, threads: hackThreads, allowSpread: false},
       {capability: Capabilities.Weaken, threads: firstWeakenThreads, allowSpread: true},
-      {capability: Capabilities.Grow, threads: growThreads, allowSpread: false},
+      {capability: Capabilities.Grow, threads: growThreads, allowSpread: true},
       {capability: Capabilities.Weaken, threads: secondWeakenThreads, allowSpread: true},
     ]
 

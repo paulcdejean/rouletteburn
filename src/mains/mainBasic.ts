@@ -4,7 +4,7 @@ import { metaFarming } from "@/farmingAlgos/metaFarming";
 import { Network, refreshNetwork } from "@/network";
 import { NS } from "@ns";
 import * as basicList from "@/staticRam"
-import { prepSingleGrowOnly } from "@/farmingAlgos/prepSingle";
+import { getPrepCycles } from "@/targettingAlgos/utils";
 
 
 export const basicFunctions = Object.keys(basicList)
@@ -30,12 +30,11 @@ export async function mainBasic(ns: NS): Promise<void> {
       refreshNetwork(ns, network, capabilities)
     }
 
-    const target = "phantasy"
+    const target = "omega-net"
 
-    const farm = prepSingleGrowOnly(ns, network, target)
+    const prepCycles = getPrepCycles(ns, network, target)
 
-    ns.tprint(farm.getStats(ns))
-    
+    ns.tprint(prepCycles)
 
     return;
 
