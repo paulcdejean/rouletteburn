@@ -35,8 +35,6 @@ export async function mainBasic(ns: NS): Promise<void> {
     const farm = prepSingleGrowOnly(ns, network, target)
 
     ns.tprint(farm.getStats(ns))
-
-    ns.tprint(farm)
     
 
     return;
