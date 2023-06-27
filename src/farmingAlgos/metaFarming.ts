@@ -3,8 +3,9 @@ import type { NS } from "@ns";
 import { Network } from "@/network"
 import { prepSingle } from "@/farmingAlgos/prepSingle";
 import { basicHWGW } from "@/farmingAlgos/basicHWGW";
+import { Farm } from "@/Farm";
 
-type FarmingAlgo = (ns: NS, network: Network, target: string) => Promise<void>
+type FarmingAlgo = (ns: NS, network: Network, target: string) => Farm
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function metaFarming(ns: NS, capabilities: Capabilities, target: string) : FarmingAlgo {

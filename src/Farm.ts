@@ -9,7 +9,15 @@ export type Batch = Operation[]
 export interface Operation {
   capability : Capabilities
   threads : number
+  allowSpread : boolean
   // TODO: stonks
+}
+
+export interface FarmStats {
+  earningsPerCycle: number
+  cycleTimeInMs: number
+  earningsPerSecond: number
+  growThreads: number
 }
 
 interface Spawn {
@@ -144,7 +152,6 @@ export class Farm {
       if (pid === 0) {
         ns.tprint(`ERROR: Exec in farm run failed on host ${this.plan[spawn].host}`)
         return
-        throw new Error(`Exec in farm run failed on host ${this.plan[spawn].host}`)
       }
     }
   }

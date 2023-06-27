@@ -30,6 +30,19 @@ export async function mainBasic(ns: NS): Promise<void> {
       refreshNetwork(ns, network, capabilities)
     }
 
+    for (const server in network.servers) {
+      if ((network.servers[server].moneyMax ?? 0) > 0) {
+        const currentMoney = ns.getServerMoneyAvailable(server)
+        const maxMoney = ns.getServerMaxMoney(server)
+        const requiredGrowAmount = maxMoney / currentMoney
+        const requiredGrowThreads = Math.ceil(ns.growthAnalyze(server, requiredGrowAmount))
+        ns.tprint(`Required grow threads for ${server } is ${requiredGrowThreads}`)
+      }
+    }
+
+    return
+
+
     const target = metaTargetting(ns, capabilities)(ns, network)
 
     await metaFarming(ns, capabilities, target)(ns, network, target)

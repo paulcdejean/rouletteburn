@@ -1,7 +1,7 @@
 import { Capabilities } from "@/Capabilities";
 import { Farm } from "@/Farm";
 import { Network } from "@/network";
-import { growthAnalyzeSecurity, sleep, weakenAnalyze } from "@/utils";
+import { growthAnalyzeSecurity, weakenAnalyze } from "@/utils";
 import { NS } from "@ns";
 
 function weakenToMinSecurity(ns: NS, farm: Farm) : boolean {
@@ -15,6 +15,7 @@ function weakenToMinSecurity(ns: NS, farm: Farm) : boolean {
     return farm.schedule(ns, [{
       capability: Capabilities.Weaken,
       threads: requiredWeakenThreads,
+      allowSpread: true,
     }])
   } else {
     return true
@@ -27,39 +28,57 @@ function growToMaxMoney(ns: NS, farm: Farm) : boolean {
 
   if (currentMoney < maxMoney) {
     const requiredGrowAmount = maxMoney / currentMoney
-    const requiredGrowThreads = Math.ceil(ns.growthAnalyze(farm.target, requiredGrowAmount))
+    let attemptedGrowThreads = Math.ceil(ns.growthAnalyze(farm.target, requiredGrowAmount))
 
-    let attemptedGrowThreads = requiredGrowThreads
-    while (attemptedGrowThreads > 0) {
-      const growSecurityGain = growthAnalyzeSecurity(ns, attemptedGrowThreads, farm.target)
-      const requiredWeakenThreads = Math.ceil(growSecurityGain / weakenAnalyze(ns, 1))
+    const growSecurityGain = growthAnalyzeSecurity(ns, attemptedGrowThreads, farm.target)
+    const requiredWeakenThreads = Math.ceil(growSecurityGain / weakenAnalyze(ns, 1))
 
-      const success = farm.schedule(ns, [
-        {
-          capability: Capabilities.Grow,
-          threads: attemptedGrowThreads,
-        },
-        {
-          capability: Capabilities.Weaken,
-          threads: requiredWeakenThreads,
-        }
-      ])
-      if (success) {
-        return true
+    const success = farm.schedule(ns, [
+      {
+        capability: Capabilities.Grow,
+        threads: attemptedGrowThreads,
+        allowSpread: false,
+      },
+      {
+        capability: Capabilities.Weaken,
+        threads: requiredWeakenThreads,
+        allowSpread: true,
       }
-      attemptedGrowThreads = attemptedGrowThreads - 1
+    ])
+
+    if (success) {
+      farm.finalWeaken(ns)
+      return true
+    } else {
+      attemptedGrowThreads = 25 // Early game heurestic...
+      while (attemptedGrowThreads > 0) {
+        const success = farm.schedule(ns, [
+          {
+            capability: Capabilities.Grow,
+            threads: attemptedGrowThreads,
+            allowSpread: true,
+          },
+          {
+            capability: Capabilities.Weaken,
+            threads: requiredWeakenThreads,
+            allowSpread: true,
+          }
+        ])
+        if (success) {
+          return true
+        }
+        attemptedGrowThreads = attemptedGrowThreads - 1
+      }
+      return false
     }
-    return false
   } else {
     return false
   }
 }
 
-export function prepSingle(ns: NS, network: Network, target: string) : Promise<void> {
+export function prepSingle(ns: NS, network: Network, target: string) : Farm {
   ns.tprint(`Running farming algorithm "prepSingle" on target ${target}`)
   const farm = new Farm(ns, network, target)
-
-  const weakenTime = ns.getWeakenTime(farm.target)
 
   if(weakenToMinSecurity(ns, farm)) {
     while(growToMaxMoney(ns, farm));
@@ -67,7 +86,5 @@ export function prepSingle(ns: NS, network: Network, target: string) : Promise<v
 
   farm.finalWeaken(ns)
 
-  farm.run(ns)
-
-  return sleep(weakenTime + 3000)
+  return farm
 }

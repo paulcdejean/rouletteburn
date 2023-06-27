@@ -5,7 +5,7 @@ import { growthAnalyzeSecurity, hackAnalyzeSecurity, weakenAnalyze } from "@/uti
 import { NS } from "@ns";
 
 export function basicHWGW(ns: NS, network: Network, target: string) : Farm {
-  ns.tprint(`Running farming algorithm "basicHWGW" on target ${target}`)
+  ns.tprint(`Running farming algorithm "noodlesHGW" on target ${target}`)
   const farm = new Farm(ns, network, target)
 
   const hackRate = ns.hackAnalyze(target)
@@ -26,13 +26,12 @@ export function basicHWGW(ns: NS, network: Network, target: string) : Farm {
   while(hackThreads > 0) {
     const hackSecurityGain = hackAnalyzeSecurity (ns, hackThreads, target)
     const growthSecurityGain = growthAnalyzeSecurity(ns, growThreads, target)
-    const firstWeakenThreads = Math.ceil(hackSecurityGain / weakenAnalyze(ns, 1))
-    const secondWeakenThreads =  Math.ceil(growthSecurityGain / weakenAnalyze(ns, 1))
+    const totalSecurityGain = hackSecurityGain + growthSecurityGain
+    const weakenThreads = Math.ceil(totalSecurityGain / weakenAnalyze(ns, 1))
     const batch = [
-      {capability: Capabilities.Hack, threads: hackThreads, allowSpread: false},
-      {capability: Capabilities.Weaken, threads: firstWeakenThreads, allowSpread: true},
-      {capability: Capabilities.Grow, threads: growThreads, allowSpread: false},
-      {capability: Capabilities.Weaken, threads: secondWeakenThreads, allowSpread: true},
+      {capability: Capabilities.Hack, threads: hackThreads, allowSpread: true},
+      {capability: Capabilities.Grow, threads: growThreads, allowSpread: true},
+      {capability: Capabilities.Weaken, threads: weakenThreads, allowSpread: true},
     ]
     if(!farm.schedule(ns, batch)) {
       hackThreads = hackThreads - 1

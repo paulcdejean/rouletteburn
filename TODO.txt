@@ -1,1 +1,13 @@
-Meta farming returns prep only if target's money isn't maxed or target's security isn't min...
+Tune prep function, to have better ratios
+
+MATH!!!
+
+getPrepCycles to get one part of the line
+
+hwgwRoughEarnings to get the other part of the line
+
+Add standard functionality
+
+Start server buyer once we have 3 cracks
+
+
