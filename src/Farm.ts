@@ -195,7 +195,7 @@ export class Farm {
 
     for (const spawn in this.plan) {
       if (this.plan[spawn].capability == Capabilities.Grow) {
-        stats.growThreads = stats.growThreads + 1
+        stats.growThreads = stats.growThreads + this.plan[spawn].threads
       }
     }
 
