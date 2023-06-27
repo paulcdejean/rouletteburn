@@ -40,6 +40,6 @@
     "^getServerNumPortsRequired$",
     "^getServerMoneyAvailable$",
     "^getHackingLevel$",
-    "^getTimeSinceLastAug$"
+    "^getResetInfo$"
   ]
 }

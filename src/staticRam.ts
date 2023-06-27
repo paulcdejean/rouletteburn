@@ -35,5 +35,5 @@ export const getServerMoneyAvailable = 0;
 // getPlayer is too expensive.
 export const getHackingLevel = 0;
 
-// Cheap and helps with targetting.
-export const getTimeSinceLastAug = 0;
+// Luxury, but actually being able to time stuff helps with speedrunning.
+export const getResetInfo = 0;
