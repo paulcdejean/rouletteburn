@@ -1,10 +1,9 @@
 import { Capabilities, upgradeCapabilities } from "@/Capabilities";
 import { crackNetwork } from "@/crack";
-import { metaFarming } from "@/farmingAlgos/metaFarming";
 import { Network, refreshNetwork } from "@/network";
 import { NS } from "@ns";
 import * as basicList from "@/staticRam"
-import { getPrepCycles } from "@/targettingAlgos/utils";
+import { canFarm, getPrepCycles } from "@/targettingAlgos/utils";
 
 
 export const basicFunctions = Object.keys(basicList)
@@ -30,16 +29,13 @@ export async function mainBasic(ns: NS): Promise<void> {
       refreshNetwork(ns, network, capabilities)
     }
 
-    const target = "omega-net"
+    for (const server in network.servers) {
+      if(canFarm(ns, network.servers[server])) {
+        const prepCycles = getPrepCycles(ns, network, server)
+        ns.tprint(`Server ${server} can be prepared in ${prepCycles} cycles`)
+      }
+    }    
 
-    const prepCycles = getPrepCycles(ns, network, target)
-
-    ns.tprint(prepCycles)
-
-    return;
-
-    // const target = metaTargetting(ns, capabilities)(ns, network)
-
-    await metaFarming(ns, capabilities, target)(ns, network, target)
+    return
   }
 }

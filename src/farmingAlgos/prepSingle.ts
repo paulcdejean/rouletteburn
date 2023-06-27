@@ -80,7 +80,6 @@ function growToMaxMoney(ns: NS, farm: Farm) : boolean {
 }
 
 export function prepSingle(ns: NS, network: Network, target: string) : Farm {
-  ns.tprint(`Running farming algorithm "prepSingle" on target ${target}`)
   const farm = new Farm(ns, network, target)
 
   if(weakenToMinSecurity(ns, farm)) {
@@ -93,7 +92,6 @@ export function prepSingle(ns: NS, network: Network, target: string) : Farm {
 }
 
 export function prepSingleGrowOnly(ns: NS, network: Network, target: string) : Farm {
-  ns.tprint(`Running farming algorithm "growOnlySingle" on target ${target}`)
   const farm = new Farm(ns, network, target)
 
   while(growToMaxMoney(ns, farm));
