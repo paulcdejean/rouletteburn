@@ -2,10 +2,12 @@ import { Capabilities, upgradeCapabilities } from "@/Capabilities";
 import { crackNetwork } from "@/crack";
 import { metaFarming } from "@/farmingAlgos/metaFarming";
 import { Network, refreshNetwork } from "@/network";
-import { metaTargetting } from "@/targettingAlgos/metaTargeting";
+
 import { NS } from "@ns";
 
 import * as basicList from "@/staticRam"
+import { growOnlySingle } from "@/farmingAlgos/prepSingle";
+
 
 export const basicFunctions = Object.keys(basicList)
 
@@ -30,20 +32,16 @@ export async function mainBasic(ns: NS): Promise<void> {
       refreshNetwork(ns, network, capabilities)
     }
 
-    for (const server in network.servers) {
-      if ((network.servers[server].moneyMax ?? 0) > 0) {
-        const currentMoney = ns.getServerMoneyAvailable(server)
-        const maxMoney = ns.getServerMaxMoney(server)
-        const requiredGrowAmount = maxMoney / currentMoney
-        const requiredGrowThreads = Math.ceil(ns.growthAnalyze(server, requiredGrowAmount))
-        ns.tprint(`Required grow threads for ${server } is ${requiredGrowThreads}`)
-      }
-    }
+    const target = "phantasy"
 
-    return
+    const farm = growOnlySingle(ns, network, target)
 
+    ns.tprint(farm.getStats(ns))
+    
 
-    const target = metaTargetting(ns, capabilities)(ns, network)
+    return;
+
+    // const target = metaTargetting(ns, capabilities)(ns, network)
 
     await metaFarming(ns, capabilities, target)(ns, network, target)
   }

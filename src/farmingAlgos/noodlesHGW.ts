@@ -4,7 +4,7 @@ import { Network } from "@/network";
 import { growthAnalyzeSecurity, hackAnalyzeSecurity, weakenAnalyze } from "@/utils";
 import { NS } from "@ns";
 
-export function basicHWGW(ns: NS, network: Network, target: string) : Farm {
+export function noodlesHGW(ns: NS, network: Network, target: string) : Farm {
   ns.tprint(`Running farming algorithm "noodlesHGW" on target ${target}`)
   const farm = new Farm(ns, network, target)
 

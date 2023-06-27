@@ -34,6 +34,7 @@ export function basicHWGW(ns: NS, network: Network, target: string) : Farm {
       {capability: Capabilities.Grow, threads: growThreads, allowSpread: false},
       {capability: Capabilities.Weaken, threads: secondWeakenThreads, allowSpread: true},
     ]
+
     if(!farm.schedule(ns, batch)) {
       hackThreads = hackThreads - 1
     }

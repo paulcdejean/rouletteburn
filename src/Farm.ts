@@ -30,7 +30,7 @@ interface Spawn {
 
 export class Farm {
   private availableRam : Record<string, number>
-  public plan : Spawn[] = []
+  private plan : Spawn[] = []
   public target : string
 
   constructor(ns: NS, network: Network, target: string) {
@@ -154,5 +154,24 @@ export class Farm {
         return
       }
     }
+  }
+
+  getStats(ns: NS) : FarmStats {
+    const stats = {
+      earningsPerCycle: 0,
+      cycleTimeInMs: 0,
+      earningsPerSecond: 0,
+      growThreads: 0,
+    }
+
+    stats.cycleTimeInMs = ns.getWeakenTime(this.target)
+
+    for (const spawn in this.plan) {
+      if (this.plan[spawn].capability == Capabilities.Grow) {
+        stats.growThreads = stats.growThreads + 1
+      }
+    }
+
+    return stats
   }
 }

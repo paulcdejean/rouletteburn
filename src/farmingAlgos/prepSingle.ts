@@ -30,8 +30,8 @@ function growToMaxMoney(ns: NS, farm: Farm) : boolean {
     const requiredGrowAmount = maxMoney / currentMoney
     let attemptedGrowThreads = Math.ceil(ns.growthAnalyze(farm.target, requiredGrowAmount))
 
-    const growSecurityGain = growthAnalyzeSecurity(ns, attemptedGrowThreads, farm.target)
-    const requiredWeakenThreads = Math.ceil(growSecurityGain / weakenAnalyze(ns, 1))
+    let growSecurityGain = growthAnalyzeSecurity(ns, attemptedGrowThreads, farm.target)
+    let requiredWeakenThreads = Math.ceil(growSecurityGain / weakenAnalyze(ns, 1))
 
     const success = farm.schedule(ns, [
       {
@@ -52,6 +52,9 @@ function growToMaxMoney(ns: NS, farm: Farm) : boolean {
     } else {
       attemptedGrowThreads = 25 // Early game heurestic...
       while (attemptedGrowThreads > 0) {
+        growSecurityGain = growthAnalyzeSecurity(ns, attemptedGrowThreads, farm.target)
+        requiredWeakenThreads = Math.ceil(growSecurityGain / weakenAnalyze(ns, 1))
+    
         const success = farm.schedule(ns, [
           {
             capability: Capabilities.Grow,
@@ -83,6 +86,17 @@ export function prepSingle(ns: NS, network: Network, target: string) : Farm {
   if(weakenToMinSecurity(ns, farm)) {
     while(growToMaxMoney(ns, farm));
   }
+
+  farm.finalWeaken(ns)
+
+  return farm
+}
+
+export function growOnlySingle(ns: NS, network: Network, target: string) : Farm {
+  ns.tprint(`Running farming algorithm "growOnlySingle" on target ${target}`)
+  const farm = new Farm(ns, network, target)
+
+  while(growToMaxMoney(ns, farm));
 
   farm.finalWeaken(ns)
 
