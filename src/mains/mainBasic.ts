@@ -22,7 +22,7 @@ export async function mainBasic(ns: NS): Promise<void> {
   refreshNetwork(ns, network, capabilities)
 
   // Runs in the background, terminates when all crackable servers are cracked
-  crackNetwork(ns, network, 2000)
+  crackNetwork(ns, network, 1000)
 
   // Foreground loop
   while(!upgradeCapabilities(ns, capabilities)) {
