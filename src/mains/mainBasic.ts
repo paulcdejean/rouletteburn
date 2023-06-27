@@ -3,7 +3,7 @@ import { crackNetwork } from "@/crack";
 import { Network, refreshNetwork } from "@/network";
 import { NS } from "@ns";
 import * as basicList from "@/staticRam"
-import { canFarm, getPrepCycles } from "@/targettingAlgos/utils";
+import { canFarm, getPrepTime } from "@/targettingAlgos/utils";
 
 
 export const basicFunctions = Object.keys(basicList)
@@ -31,8 +31,9 @@ export async function mainBasic(ns: NS): Promise<void> {
 
     for (const server in network.servers) {
       if(canFarm(ns, network.servers[server])) {
-        const prepCycles = getPrepCycles(ns, network, server)
-        ns.tprint(`Server ${server} can be prepared in ${prepCycles} cycles`)
+        const prepTime = getPrepTime(ns, network, server)
+        const formattedPrepTime = ns.tFormat(prepTime, true)
+        ns.tprint(`Server ${server} can be prepared in ${formattedPrepTime}`)
       }
     }    
 

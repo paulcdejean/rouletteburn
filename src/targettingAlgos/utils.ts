@@ -34,10 +34,16 @@ export function getPrepCycles(ns: NS, network: Network, target: string) : number
   return getWeakenCycles(ns, network, target) + getGrowCycles(ns, network, target)
 }
 
+export function getPrepTime(ns: NS, network: Network, target: string) : number {
+  const prepCycles = getPrepCycles(ns, network, target)
+  const prepTime = ns.getWeakenTime(target)
+  return prepCycles * prepTime
+}
+
 export function canFarm(ns: NS, target: Server) : boolean {
   if ((target.moneyMax ?? 0) > 0 &&
     target.hasAdminRights &&
-    (target.requiredHackingSkill ?? Infinity) < ns.getHackingLevel()) {
+    (target.requiredHackingSkill ?? Infinity) <= ns.getHackingLevel()) {
     return true
   } else {
     return false

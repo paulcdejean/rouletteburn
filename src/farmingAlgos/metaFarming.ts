@@ -4,6 +4,8 @@ import { Network } from "@/network"
 import { prepSingle } from "@/farmingAlgos/prepSingle";
 import { basicHWGW } from "@/farmingAlgos/basicHWGW";
 import { Farm } from "@/Farm";
+import { noodles } from "@/constants";
+import { noodlesHGW } from "./noodlesHGW";
 
 type FarmingAlgo = (ns: NS, network: Network, target: string) => Farm
 
@@ -13,6 +15,10 @@ export function metaFarming(ns: NS, capabilities: Capabilities, target: string) 
   ns.getServerMoneyAvailable(target) !== ns.getServerMaxMoney(target)) {
     return prepSingle
   } else {
-    return basicHWGW
+    if (target === noodles) {
+      return noodlesHGW
+    } else {
+      return basicHWGW
+    }
   }
 }
