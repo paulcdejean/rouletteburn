@@ -92,34 +92,59 @@ export class Farm {
       const operationScriptRam = getCapabilityRam(ns, batch[operation].capability)
       let successfulPlan = false
 
-      // TODO: For weaken, allow spreading across multiple servers
+      let currentThreads = batch[operation].threads
 
+      let additionalMsec = 0
+      if(batch[operation].capability === Capabilities.Hack) {
+        additionalMsec = weakenTime - hackTime
+      } else if(batch[operation].capability == Capabilities.Grow) {
+        additionalMsec = weakenTime - growTime
+      }
+      
       for (const server in simulatedAvailableRam) {
-        if (simulatedAvailableRam[server] >= operationScriptRam * batch[operation].threads) {
-          let additionalMsec = 0
-          if(batch[operation].capability === Capabilities.Hack) {
-            additionalMsec = weakenTime - hackTime
-          } else if(batch[operation].capability == Capabilities.Grow) {
-            additionalMsec = weakenTime - growTime
-          }
+        if (simulatedAvailableRam[server] >= operationScriptRam * currentThreads) {
+          // Attempt to put the operation on a single server
           const hgwOptions : BasicHGWOptions = {
-            threads: batch[operation].threads,
+            threads: currentThreads,
             stock: false,
             additionalMsec: additionalMsec
           }
 
           simulatedPlan.push({
             capability: batch[operation].capability,
-            threads: batch[operation].threads,
+            threads: currentThreads,
             host: server,
             hgwOptions: hgwOptions,
             ram: operationScriptRam,
           })
-          simulatedAvailableRam[server] = simulatedAvailableRam[server] - (operationScriptRam * batch[operation].threads)
+          simulatedAvailableRam[server] = simulatedAvailableRam[server] - (operationScriptRam * currentThreads)
           successfulPlan = true
           break
+        } else if (batch[operation].allowSpread) {
+          // If spread is allowed just spread things wherever
+          let attemptingThreads = currentThreads - 1
+          while (attemptingThreads > 0) {
+            if (simulatedAvailableRam[server] >= operationScriptRam * currentThreads) {
+              const hgwOptions : BasicHGWOptions = {
+                threads: currentThreads,
+                stock: false,
+                additionalMsec: additionalMsec
+              }
+  
+              simulatedPlan.push({
+                capability: batch[operation].capability,
+                threads: currentThreads,
+                host: server,
+                hgwOptions: hgwOptions,
+                ram: operationScriptRam,
+              })
+              currentThreads = currentThreads - attemptingThreads
+            }
+            attemptingThreads = attemptingThreads - 1
+          }
         }
       }
+
       if(!successfulPlan) {
         return false
       }
