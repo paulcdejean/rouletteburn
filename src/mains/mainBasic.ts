@@ -44,7 +44,7 @@ export async function mainBasic(ns: NS): Promise<void> {
 
     ns.tprint(`Farming ${target}`)
     await farm.run(ns)
-    const timestamp = ns.tFormat(ns.getResetInfo().lastAugReset)
+    const timestamp = ns.tFormat(Date.now() - ns.getResetInfo().lastAugReset)
     ns.tprint(`Farming ${target} complete at ${timestamp}`)
   }
 }

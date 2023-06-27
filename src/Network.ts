@@ -6,6 +6,7 @@ import type { Server } from "@ns"
 import type { NS } from "@ns";
 import { Capabilities } from "@/Capabilities"
 import { home, cave, thisScript } from "@/constants"
+import { Cracks } from "./crack";
 
 type Servers = Record<string, Server>
 
@@ -13,6 +14,14 @@ export class Network {
   public upToDate = false
   public cavePath : string[] | null = null
   public servers : Servers = {}
+  public cracks : Record<Cracks, boolean> = {
+    [Cracks.NUKE]: false,
+    [Cracks.BruteSSH]: false,
+    [Cracks.FTPCrack]: false,
+    [Cracks.RelaySMTP]: false,
+    [Cracks.HTTPWorm]: false,
+    [Cracks.SQLInject]: false,
+  }
 }
 
 export function refreshNetwork(ns: NS, network: Network, capabilities: Capabilities): Network {
