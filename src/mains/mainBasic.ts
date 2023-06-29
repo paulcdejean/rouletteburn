@@ -10,23 +10,26 @@ import * as basicList from "@/staticRam"
 // import { metaFarming } from "@/farmingAlgos/metaFarming";
 
 import { RoulettePlaythrough, RouletteRound } from "@/roulette/RoulettePlaythrough";
+import { WHRNG } from "@/roulette/badRNG";
 
 
 export const basicFunctions = Object.keys(basicList)
 
 export async function mainBasic(ns: NS): Promise<void> {
   ns.tprint("Roulette!")
+
+  const rng = new WHRNG(new Date().getTime())
   const roundOne : RouletteRound = {
-    guess: Math.floor(Math.random() * 36),
-    result: Math.floor(Math.random() * 36)
+    guess: 3,
+    result: Math.floor(rng.random() * 36)
   }
   const roundTwo : RouletteRound = {
-    guess: Math.floor(Math.random() * 36),
-    result: Math.floor(Math.random() * 36)
+    guess: 3,
+    result: Math.floor(rng.random() * 36)
   }
   const roundThree : RouletteRound = {
-    guess: Math.floor(Math.random() * 36),
-    result: Math.floor(Math.random() * 36)
+    guess: 3,
+    result: Math.floor(rng.random() * 36)
   }
 
   const playthrough = new RoulettePlaythrough([roundOne, roundTwo, roundThree])
