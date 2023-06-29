@@ -1,5 +1,5 @@
 {
-  "include": ["NetscriptDefinitions.d.ts", "src/**/*"],
+  "include": ["NetscriptDefinitions.d.ts", "src/**/*", "../pkg/timeburn.d.ts"],
   "exclude": [".eslintc.cjs"],
   "compilerOptions": {
     "module": "esnext",
@@ -12,13 +12,13 @@
     "importHelpers": true,
     "strict": true,
     "rootDir": "src/",
-    "outDir": "dist/",
     "baseUrl": "src/",
     "allowJs": true,
     "noEmit": true,
     "allowImportingTsExtensions": true,
     "paths": {
       "@ns": ["../NetscriptDefinitions.d.ts"],
+      "@rust": ["../pkg/timeburn.d.ts"],
       "@/*": [
         "*"
       ]

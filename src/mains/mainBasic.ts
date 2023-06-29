@@ -1,7 +1,8 @@
 
 import { NS } from "@ns";
 import * as basicList from "@/staticRam"
-import { WHRNG } from "@/roulette/badRNG";
+// import { rustadd } from "@rust"
+// import { WHRNG } from "@/roulette/badRNG";
 
 // import { Capabilities, upgradeCapabilities } from "@/Capabilities";
 // import { crackNetwork } from "@/crack";
@@ -18,45 +19,48 @@ export const basicFunctions = Object.keys(basicList)
 
 export async function mainBasic(ns: NS): Promise<void> {
   ns.tprint("Roulette!")
-  ns.tprint(`Start time = ${performance.now()}`)
 
-  const maxSeed = 30e6
-  const timestamp = new Date().getTime()
-  const zeroDate = timestamp - (timestamp % maxSeed)
+  // ns.tprint(rustadd(8, 2))
 
-  const realSeed = new Date().getTime()
-  const realRNG = new WHRNG(realSeed)
+  // ns.tprint(`Start time = ${performance.now()}`)
 
-  ns.tprint(`Real seed = ${realSeed}`)
+  // const maxSeed = 30e6
+  // const timestamp = new Date().getTime()
+  // const zeroDate = timestamp - (timestamp % maxSeed)
 
-  const lastFiveSpins = []
-  let n = 0
-  while (n < 5) {
-    lastFiveSpins.push(Math.floor(realRNG.random() * 37))
-    n = n + 1
-  }
+  // const realSeed = new Date().getTime()
+  // const realRNG = new WHRNG(realSeed)
 
-  ns.tprint(`Last five spins = ${lastFiveSpins}`)
+  // ns.tprint(`Real seed = ${realSeed}`)
 
-  const possibleSeeds = []
-  n = 0
-  while (n < maxSeed) {
-    const fakeRNG = new WHRNG(zeroDate + n)
-    let match = true
-    for (const spin of lastFiveSpins) {
-      if (spin !== Math.floor(fakeRNG.random() * 37)) {
-        match = false
-      }
-    }
-    if (match) {
-      possibleSeeds.push(n + zeroDate)
-    }
-    n = n + 1
-  }
+  // const lastFiveSpins = []
+  // let n = 0
+  // while (n < 5) {
+  //   lastFiveSpins.push(Math.floor(realRNG.random() * 37))
+  //   n = n + 1
+  // }
 
-  ns.tprint(`Possible seeds =`)
-  ns.tprint(possibleSeeds)
-  ns.tprint(`End time = ${performance.now()}`)
+  // ns.tprint(`Last five spins = ${lastFiveSpins}`)
+
+  // const possibleSeeds = []
+  // n = 0
+  // while (n < maxSeed) {
+  //   const fakeRNG = new WHRNG(zeroDate + n)
+  //   let match = true
+  //   for (const spin of lastFiveSpins) {
+  //     if (spin !== Math.floor(fakeRNG.random() * 37)) {
+  //       match = false
+  //     }
+  //   }
+  //   if (match) {
+  //     possibleSeeds.push(n + zeroDate)
+  //   }
+  //   n = n + 1
+  // }
+
+  // ns.tprint(`Possible seeds =`)
+  // ns.tprint(possibleSeeds)
+  // ns.tprint(`End time = ${performance.now()}`)
 }
 
 // export async function mainBasic(ns: NS): Promise<void> {
