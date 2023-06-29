@@ -1,7 +1,7 @@
-
+// 
 import { NS } from "@ns";
 import * as basicList from "@/staticRam"
-// import { rustadd } from "@rust"
+import { rustadd } from "@rust"
 // import { WHRNG } from "@/roulette/badRNG";
 
 // import { Capabilities, upgradeCapabilities } from "@/Capabilities";
@@ -20,7 +20,7 @@ export const basicFunctions = Object.keys(basicList)
 export async function mainBasic(ns: NS): Promise<void> {
   ns.tprint("Roulette!")
 
-  // ns.tprint(rustadd(8, 2))
+  ns.tprint(rustadd(4, 5))
 
   // ns.tprint(`Start time = ${performance.now()}`)
 

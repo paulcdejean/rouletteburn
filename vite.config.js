@@ -21,6 +21,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: [
+      { find: '@rust', replacement: fileURLToPath(new URL('./pkg/timeburn.js', import.meta.url)) },
       { find: '@ns', replacement: fileURLToPath(new URL('./NetscriptDefinitions.d.ts', import.meta.url)) },
       { find: '@', replacement: fileURLToPath(new URL('./src', import.meta.url)) },
     ],
