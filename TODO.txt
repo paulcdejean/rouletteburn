@@ -1,3 +1,5 @@
+ITS TOO SLOW, so it's time for Rust! We've been waiting for this moment...
+
 C A S I N O
 
 MATH!!!

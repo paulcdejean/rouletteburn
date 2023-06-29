@@ -1,6 +1,7 @@
 
 import { NS } from "@ns";
 import * as basicList from "@/staticRam"
+import { WHRNG } from "@/roulette/badRNG";
 
 // import { Capabilities, upgradeCapabilities } from "@/Capabilities";
 // import { crackNetwork } from "@/crack";
@@ -9,32 +10,53 @@ import * as basicList from "@/staticRam"
 // import { metaTargeting } from "@/targettingAlgos/metaTargeting";
 // import { metaFarming } from "@/farmingAlgos/metaFarming";
 
-import { RoulettePlaythrough, RouletteRound } from "@/roulette/RoulettePlaythrough";
-import { WHRNG } from "@/roulette/badRNG";
+//import { RoulettePlaythrough, RouletteRound } from "@/roulette/RoulettePlaythrough";
+//import { WHRNG } from "@/roulette/badRNG";
 
 
 export const basicFunctions = Object.keys(basicList)
 
 export async function mainBasic(ns: NS): Promise<void> {
   ns.tprint("Roulette!")
+  ns.tprint(`Start time = ${performance.now()}`)
 
-  const rng = new WHRNG(new Date().getTime())
-  const roundOne : RouletteRound = {
-    guess: 3,
-    result: Math.floor(rng.random() * 36)
-  }
-  const roundTwo : RouletteRound = {
-    guess: 3,
-    result: Math.floor(rng.random() * 36)
-  }
-  const roundThree : RouletteRound = {
-    guess: 3,
-    result: Math.floor(rng.random() * 36)
+  const maxSeed = 30e6
+  const timestamp = new Date().getTime()
+  const zeroDate = timestamp - (timestamp % maxSeed)
+
+  const realSeed = new Date().getTime()
+  const realRNG = new WHRNG(realSeed)
+
+  ns.tprint(`Real seed = ${realSeed}`)
+
+  const lastFiveSpins = []
+  let n = 0
+  while (n < 5) {
+    lastFiveSpins.push(Math.floor(realRNG.random() * 37))
+    n = n + 1
   }
 
-  const playthrough = new RoulettePlaythrough([roundOne, roundTwo, roundThree])
-  ns.tprint([roundOne, roundTwo, roundThree])
-  ns.tprint(playthrough.potentialResults)
+  ns.tprint(`Last five spins = ${lastFiveSpins}`)
+
+  const possibleSeeds = []
+  n = 0
+  while (n < maxSeed) {
+    const fakeRNG = new WHRNG(zeroDate + n)
+    let match = true
+    for (const spin of lastFiveSpins) {
+      if (spin !== Math.floor(fakeRNG.random() * 37)) {
+        match = false
+      }
+    }
+    if (match) {
+      possibleSeeds.push(n + zeroDate)
+    }
+    n = n + 1
+  }
+
+  ns.tprint(`Possible seeds =`)
+  ns.tprint(possibleSeeds)
+  ns.tprint(`End time = ${performance.now()}`)
 }
 
 // export async function mainBasic(ns: NS): Promise<void> {
