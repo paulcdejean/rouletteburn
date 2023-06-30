@@ -1,22 +1,6 @@
 #![feature(convert_float_to_int)]
-
 use wasm_bindgen::prelude::*;
-
 mod whrng;
-
-#[cfg(feature = "wee_alloc")]
-#[global_allocator]
-static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-
-#[wasm_bindgen]
-pub fn rustadd(lhs: u32, rhs: u32) -> u32 {
-  return lhs + rhs
-}
-
-#[wasm_bindgen]
-pub fn rustreverse(input: js_sys::Array) -> js_sys::Array {
-  return input.clone().reverse()
-}
 
 const WHRNG_NUMBER_OF_SEEDS: u64 = 30000000;
 
@@ -24,7 +8,8 @@ const WHRNG_NUMBER_OF_SEEDS: u64 = 30000000;
 ///
 /// # Arguments
 ///
-/// * `name` - A string slice that holds the name of the person
+/// * `spins` - The array of the roulette spins to try and derive a seed from.
+/// * `minimum_seed` - The minimum seed to check from, something that seeds as 0 but is close enough to avoid precision oopsies.
 #[wasm_bindgen]
 pub fn get_roulette_seeds(spins: js_sys::Uint32Array, minimum_seed: js_sys::Number) -> js_sys::Set {
   let results: js_sys::Set = js_sys::Set::new(&JsValue::null()); // No way to construct an empty set? https://github.com/rustwasm/wasm-bindgen/issues/3501
@@ -32,18 +17,20 @@ pub fn get_roulette_seeds(spins: js_sys::Uint32Array, minimum_seed: js_sys::Numb
   let minimum_seed_rust: f64 = minimum_seed.value_of(); // Convert float to int is experimental? https://github.com/rust-lang/rust/issues/67057
   let spins_rust: Box<[u32]> = spins.to_vec().into_boxed_slice();
   
-  // for seed in minimum_seed_rust..(minimum_seed_rust + WHRNG_NUMBER_OF_SEEDS) {
-  //   for &spin in spins_rust.iter() {
+  let mut bad_rng: whrng::WHRNG = whrng::WHRNG::new(minimum_seed_rust);
 
-  //   }
-  // }
-  // let result = fake_rng.random();
-
-
-  let mut bad_rng = whrng::WHRNG::new(minimum_seed_rust);
-
-  for n in 0..5 {
-    results.add(&JsValue::from(bad_rng.random()));
+  for n in (minimum_seed_rust as u64)..(minimum_seed_rust as u64 + WHRNG_NUMBER_OF_SEEDS) {
+    bad_rng.seed(n as f64);
+    let mut matches: bool = true;
+    for &spin in spins_rust.iter() {
+      if spin != (bad_rng.random() * 37.0).floor() as u32 {
+        matches = false;
+        break;
+      };
+    };
+    if matches {
+      results.add(&JsValue::from(n));
+    }
   }
 
   return results;
