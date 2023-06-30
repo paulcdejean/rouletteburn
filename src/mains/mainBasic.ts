@@ -1,7 +1,7 @@
 // 
 import { NS } from "@ns";
 import * as basicList from "@/staticRam"
-import { rustadd } from "@rust"
+import { get_roulette_seeds } from "@rust"
 // import { WHRNG } from "@/roulette/badRNG";
 
 // import { Capabilities, upgradeCapabilities } from "@/Capabilities";
@@ -12,7 +12,7 @@ import { rustadd } from "@rust"
 // import { metaFarming } from "@/farmingAlgos/metaFarming";
 
 //import { RoulettePlaythrough, RouletteRound } from "@/roulette/RoulettePlaythrough";
-//import { WHRNG } from "@/roulette/badRNG";
+import { WHRNG } from "@/roulette/badRNG";
 
 
 export const basicFunctions = Object.keys(basicList)
@@ -20,7 +20,27 @@ export const basicFunctions = Object.keys(basicList)
 export async function mainBasic(ns: NS): Promise<void> {
   ns.tprint("Roulette!")
 
-  ns.tprint(rustadd(4, 5))
+  // It's hard to explain this one. But basically we want to get same sizish seeds but still go over all the seeds.
+  const maxSeed = 30e6
+  const timestamp = new Date().getTime()
+  const zeroDate = timestamp - (timestamp % maxSeed) + (timestamp % maxSeed) // TODO, comment out the bit after the + so the code works
+
+  ns.tprint(`Seed = ${zeroDate}`)
+
+  const resultSet : Set<number> = get_roulette_seeds(new Uint32Array([1, 2, 3]), zeroDate)
+  ns.tprint("Rolls from rust:")
+  for (const result of resultSet) {
+    ns.tprint(result)
+  }
+
+  const javascriptRNG = new WHRNG(zeroDate)
+  ns.tprint("Rolls from javascript:")
+  let n = 0
+  while (n < 5) {
+    ns.tprint(javascriptRNG.random())
+    n = n + 1
+  }
+  
 
   // ns.tprint(`Start time = ${performance.now()}`)
 
