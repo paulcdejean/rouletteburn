@@ -1,4 +1,6 @@
-ITS TOO SLOW, so it's time for Rust! We've been waiting for this moment...
+Just jump into react. The backend code can be tinkered with later, but it should be fundamentally good enough.
+
+Can explore both the interface for the roulette table, and the main UI and quests system.
 
 C A S I N O
 

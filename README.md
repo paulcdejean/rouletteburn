@@ -1,2 +1,2 @@
 # timeburn
-Bitburner performance.now() experimentation
+Bitburner experimentation
