@@ -19,7 +19,7 @@ export async function mainBasic(ns: NS): Promise<void> {
 
   const rollCount = 4;
   
-  const rolls = new Uint32Array(rollCount)
+  const rolls = new Float64Array(rollCount)
 
   const javascriptRNG = new WHRNG(timestamp)
   ns.tprint("Rolls from javascript:")
@@ -40,4 +40,3 @@ export async function mainBasic(ns: NS): Promise<void> {
   ns.tprint(`End time = ${endTime}`)
   ns.tprint(`Total time = ${endTime - startTime}`)
 }
-
