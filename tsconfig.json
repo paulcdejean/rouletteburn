@@ -19,10 +19,10 @@
     "strict": true,
     "rootDir": "src/",
     "baseUrl": "src/",
+    "outDir": "ts",
     "allowJs": true,
     "noEmit": true,
     "jsx": "react",
-    "allowImportingTsExtensions": true,
     "paths": {
       "@ns": ["../NetscriptDefinitions.d.ts"],
       "@rust": ["../pkg/timeburn.d.ts"],

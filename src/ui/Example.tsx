@@ -1,10 +1,8 @@
 import reactLogo from '@/ui/svgs/react.svg'
-import viteLogo from '@/ui/svgs//vite.svg'
+import viteLogo from '@/ui/svgs/vite.svg'
 import './css/example.css'
 
 function Example() {
-  const [count, setCount] = React.useState(0)
-
   return (
     <>
       <div>
@@ -16,14 +14,6 @@ function Example() {
         </a>
       </div>
       <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count: number) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/Example.tsx</code> and save to test HMR
-        </p>
-      </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
