@@ -10,3 +10,4 @@ vite.config.js
 capabilities/
 pkg/
 hacks/
+ts/

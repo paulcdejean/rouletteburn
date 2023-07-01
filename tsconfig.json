@@ -1,7 +1,6 @@
 {
   "include": [
     "NetscriptDefinitions.d.ts",
-    "hacks/**/*",
     "src/**/*",
     "../pkg/timeburn.d.ts"
   ],
