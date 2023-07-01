@@ -11,3 +11,4 @@ capabilities/
 pkg/
 hacks/
 ts/
+custom.d.ts

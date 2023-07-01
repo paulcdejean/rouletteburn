@@ -14,4 +14,7 @@ module.exports = {
     project: 'tsconfig.json',
     tsconfigRootDir: './',
   },
-};
+  globals: {
+    "React": "readonly",
+  }
+}
