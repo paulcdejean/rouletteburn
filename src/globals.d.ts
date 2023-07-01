@@ -1,1 +1,5 @@
-declare const React: any
+declare global {
+  const React: any;
+}
+
+export {}
