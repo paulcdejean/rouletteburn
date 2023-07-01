@@ -1,6 +1,7 @@
 {
   "include": [
     "NetscriptDefinitions.d.ts",
+    "hacks/**/*",
     "src/**/*",
     "../pkg/timeburn.d.ts"
   ],
@@ -19,10 +20,10 @@
     "baseUrl": "src/",
     "allowJs": true,
     "noEmit": true,
-    "jsx": "react-jsx",
     "allowImportingTsExtensions": true,
     "paths": {
       "@ns": ["../NetscriptDefinitions.d.ts"],
+      "@react": ["../hacks/reactHackRevealed.d.ts"],
       "@rust": ["../pkg/timeburn.d.ts"],
       "@/*": [
         "*"

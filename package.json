@@ -12,16 +12,16 @@
     "build:obfuscate": "javascript-obfuscator dist/timeburn.js -o bitburner/timeburn.js --config obfuscator.config.json"
   },
   "devDependencies": {
-    "@types/node": "^20.3.1",
+    "@types/react": "^17.0.52",
+    "@types/react-dom": "^17.0.20",
     "@typescript-eslint/eslint-plugin": "^5.60.0",
     "@typescript-eslint/parser": "^5.60.0",
+    "@vitejs/plugin-react": "^4.0.1",
     "bitburner-filesync": "^1.1.5",
     "eslint": "^8.43.0",
     "javascript-obfuscator": "^4.0.2",
     "typescript": "~5.0.0",
     "vite": "^4.3.9",
-    "vite-plugin-wasm": "^3.2.2",
-    "@types/react": "^18.2.14",
-    "@vitejs/plugin-react": "^4.0.1"
+    "vite-plugin-wasm": "^3.2.2"
   }
 }

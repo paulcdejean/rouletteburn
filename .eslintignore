@@ -9,3 +9,4 @@ vite.config.js
 .eslintrc.cjs
 capabilities/
 pkg/
+hacks/

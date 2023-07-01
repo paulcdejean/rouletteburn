@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'url';
-import react from '@vitejs/plugin-react'
 
 import wasm from "vite-plugin-wasm";
 
@@ -19,21 +18,13 @@ export default defineConfig({
   },
   plugins: [
     wasm(),
-    react(),
   ],
   resolve: {
     alias: [
+      { find: '@react', replacement: fileURLToPath(new URL('./hacks/reactHackRevealed.d.ts', import.meta.url)) },
       { find: '@rust', replacement: fileURLToPath(new URL('./pkg/timeburn.js', import.meta.url)) },
       { find: '@ns', replacement: fileURLToPath(new URL('./NetscriptDefinitions.d.ts', import.meta.url)) },
       { find: '@', replacement: fileURLToPath(new URL('./src', import.meta.url)) },
     ],
-  },
-  rollupOptions: {
-    external: ['react'],
-    output: {
-      globals: {
-        react: 'React',
-      },
-    },
   },
 })
