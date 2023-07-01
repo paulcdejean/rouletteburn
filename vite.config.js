@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'url';
+import react from '@vitejs/plugin-react'
 
 import wasm from "vite-plugin-wasm";
 
@@ -17,7 +18,8 @@ export default defineConfig({
     minify: false,
   },
   plugins: [
-    wasm()
+    wasm(),
+    react(),
   ],
   resolve: {
     alias: [
@@ -25,5 +27,13 @@ export default defineConfig({
       { find: '@ns', replacement: fileURLToPath(new URL('./NetscriptDefinitions.d.ts', import.meta.url)) },
       { find: '@', replacement: fileURLToPath(new URL('./src', import.meta.url)) },
     ],
+  },
+  rollupOptions: {
+    external: ['react'],
+    output: {
+      globals: {
+        react: 'React',
+      },
+    },
   },
 })

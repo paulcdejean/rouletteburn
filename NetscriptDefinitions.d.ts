@@ -6622,6 +6622,20 @@ export interface NS {
   getSharePower(): number;
 
   enums: NSEnums;
+
+  /**
+   * Undocumented NS stuff...
+   */
+  heart: {
+    break(): number;
+  };
+  openDevMenu(): void;
+  exploit(): void;
+  bypass(doc: Document): void;
+  alterReality(): void;
+  rainbow(guess: string): void;
+  tprintRaw(value: React.ReactNode): void;
+  printRaw(value: React.ReactNode): void;
 }
 
 // BASE ENUMS

@@ -8,7 +8,7 @@
     "build:rust": "wasm-pack build --target bundler --release",
     "build:lint": "eslint .",
     "build:typescript": "tsc",
-    "build:vite": "vite build",
+    "build:vite": "vite build --mode production",
     "build:obfuscate": "javascript-obfuscator dist/timeburn.js -o bitburner/timeburn.js --config obfuscator.config.json"
   },
   "devDependencies": {
@@ -20,6 +20,8 @@
     "javascript-obfuscator": "^4.0.2",
     "typescript": "~5.0.0",
     "vite": "^4.3.9",
-    "vite-plugin-wasm": "^3.2.2"
+    "vite-plugin-wasm": "^3.2.2",
+    "@types/react": "^18.2.14",
+    "@vitejs/plugin-react": "^4.0.1"
   }
 }

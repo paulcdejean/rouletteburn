@@ -4,6 +4,7 @@ dist/
 bitburner/
 bootstrap/
 NetscriptDefinitions.d.ts
+NetscriptExtras.d.ts
 vite.config.js
 .eslintrc.cjs
 capabilities/
