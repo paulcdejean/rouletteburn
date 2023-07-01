@@ -1,7 +1,6 @@
 import { NS } from "@ns";
 import * as basicList from "@/staticRam"
 import { sleep } from "@/utils";
-import { React } from "@react"
 
 export const basicFunctions = Object.keys(basicList)
 
