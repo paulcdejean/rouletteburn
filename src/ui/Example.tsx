@@ -1,10 +1,7 @@
 import reactLogo from '@/ui/svgs/react.svg'
 import viteLogo from '@/ui/svgs/vite.svg'
 
-import examplecss from '@/ui/css/example.css?inline'
-
-export const exampleCSS = examplecss
-
+import examplecss from '@/ui/css/example.module.css'
 
 function Example() {
   const [count, setCount] = React.useState(0)
@@ -25,6 +22,9 @@ function Example() {
           count is {count}
         </button>
       </div>
+      <p>
+        {examplecss}
+      </p>
       <p style={{color: "red"}}>
         Click on the Vite and React logos to learn more
       </p>

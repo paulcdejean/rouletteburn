@@ -19,6 +19,11 @@ export default defineConfig({
   plugins: [
     wasm(),
   ],
+  css: {
+    modules: {
+      localsConvention: 'camelCaseOnly',
+    }
+  },
   resolve: {
     alias: [
       { find: '@rust', replacement: fileURLToPath(new URL('./pkg/timeburn.js', import.meta.url)) },
