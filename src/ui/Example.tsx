@@ -1,6 +1,5 @@
 import reactLogo from '@/ui/svgs/react.svg'
 import viteLogo from '@/ui/svgs/vite.svg'
-import './css/example.css'
 
 function Example() {
   const [count, setCount] = React.useState(0)
@@ -21,7 +20,7 @@ function Example() {
           count is {count}
         </button>
       </div>
-      <p className="read-the-docs">
+      <p style={{color: "red"}}>
         Click on the Vite and React logos to learn more
       </p>
     </>
