@@ -1,4 +1,8 @@
-Just jump into react. The backend code can be tinkered with later, but it should be fundamentally good enough.
+Experiment with https://astroturfcss.github.io/astroturf/introduction/
+
+Dive into postcss more
+
+Investigate tail window stuff, what kind of control do we have over the position etc
 
 Can explore both the interface for the roulette table, and the main UI and quests system.
 

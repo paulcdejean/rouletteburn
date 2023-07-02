@@ -1,6 +1,11 @@
 import reactLogo from '@/ui/svgs/react.svg'
 import viteLogo from '@/ui/svgs/vite.svg'
 
+import examplecss from '@/ui/css/example.css?inline'
+
+export const exampleCSS = examplecss
+
+
 function Example() {
   const [count, setCount] = React.useState(0)
 
