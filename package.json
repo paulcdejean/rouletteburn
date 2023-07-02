@@ -21,6 +21,11 @@
     "javascript-obfuscator": "^4.0.2",
     "typescript": "~5.0.0",
     "vite": "^4.3.9",
-    "vite-plugin-wasm": "^3.2.2"
+    "vite-plugin-wasm": "^3.2.2",
+    "styled-components": "^6.0.1"
+  },
+  "overrides": {
+    "semver": "^7.5.3",
+    "optionator": "^0.9.0"
   }
 }
