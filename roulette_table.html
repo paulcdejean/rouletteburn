@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Roulette table test</title>
+    <style>
+.cell {
+  box-sizing: border-box;
+  border-top: 3px solid white;
+  border-left: 3px solid white;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	text-align: center;
+	width: 50px;
+	font-size: 30px;
+	color: white;
+}
+
+.black {
+  background-color: black;
+}
+
+.red {
+  background-color: red;
+}
+
+.blue {
+  background-color: darkblue;
+}
+
+.blankcell {
+  box-sizing: border-box;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	text-align: center;
+	width: 50px;
+	font-size: 30px;
+	color: white;
+}
+
+.table {
+  border-spacing: 0 0;
+  padding: 20px;
+  background-color: green;
+}
+
+.rightmost {
+  border-right: 3px solid white;
+}
+
+.topmost {
+  border-top: 3px solid white;
+}
+
+.bottommost {
+  border-bottom: 3px solid white;
+}
+
+    </style>
+  </head>
+  <body>
+    <table class="table">
+      <tr>
+        <td class="blankcell"></td>
+        <td class="cell red">3</td>
+        <td class="cell black">6</td>
+        <td class="cell red">9</td>
+        <td class="cell red">12</td>
+        <td class="cell black">15</td>
+        <td class="cell red">18</td>
+        <td class="cell red">21</td>
+        <td class="cell black">24</td>
+        <td class="cell red">27</td>
+        <td class="cell red">30</td>
+        <td class="cell black">33</td>
+        <td class="cell red rightmost">36</td>
+      </tr>
+      <tr>
+        <td class="cell blue">0</td>
+        <td class="cell black">2</td>
+        <td class="cell red">5</td>
+        <td class="cell black">8</td>
+        <td class="cell black">11</td>
+        <td class="cell red">14</td>
+        <td class="cell black">17</td>
+        <td class="cell black">20</td>
+        <td class="cell red">23</td>
+        <td class="cell black">26</td>
+        <td class="cell black">29</td>
+        <td class="cell red">32</td>
+        <td class="cell black rightmost">35</td>
+      </tr>
+      <tr>
+        <td class="blankcell topmost"></td>
+        <td class="cell red bottommost">1</td>
+        <td class="cell black bottommost">4</td>
+        <td class="cell red bottommost">7</td>
+        <td class="cell black bottommost">10</td>
+        <td class="cell black bottommost">13</td>
+        <td class="cell red bottommost">16</td>
+        <td class="cell red bottommost">19</td>
+        <td class="cell black bottommost">22</td>
+        <td class="cell red bottommost">25</td>
+        <td class="cell black bottommost">28</td>
+        <td class="cell black bottommost">31</td>
+        <td class="cell red bottommost rightmost">34</td>
+      </tr>
+    </table>
+  </body>
+</html>
