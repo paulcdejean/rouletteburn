@@ -4,7 +4,7 @@
     "NetscriptDefinitions.d.ts",
     "customd.d.ts",
     "src/**/*",
-    "../pkg/timeburn.d.ts"
+    "../pkg/rouletteburn.d.ts"
   ],
   "exclude": [".eslintc.cjs"],
   "compilerOptions": {
@@ -25,7 +25,7 @@
     "jsx": "react",
     "paths": {
       "@ns": ["../NetscriptDefinitions.d.ts"],
-      "@rust": ["../pkg/timeburn.d.ts"],
+      "@rust": ["../pkg/rouletteburn.d.ts"],
       "@/*": [
         "*"
       ]

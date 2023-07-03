@@ -21,7 +21,7 @@ Add standard functionality
 Start server buyer once we have 3 cracks
 
 Current times:
-timeburn.js: NUKE.exe aquired at 2 seconds
-timeburn.js: BruteSSH.exe aquired at 10 minutes 4 seconds
-timeburn.js: FTPCrack.exe aquired at 15 minutes 26 second
-timeburn.js: RelaySMTP.exe aquired at 21 minutes 7 seconds
+rouletteburn.js: NUKE.exe aquired at 2 seconds
+rouletteburn.js: BruteSSH.exe aquired at 10 minutes 4 seconds
+rouletteburn.js: FTPCrack.exe aquired at 15 minutes 26 second
+rouletteburn.js: RelaySMTP.exe aquired at 21 minutes 7 seconds

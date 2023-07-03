@@ -1,4 +1,4 @@
-# timeburn
+# rouletteburn
 Bitburner experimentation
 
 # Attributions
