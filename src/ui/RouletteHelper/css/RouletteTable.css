@@ -1,0 +1,61 @@
+.cell {
+  box-sizing: border-box;
+  border-top: 3px solid white;
+  border-left: 3px solid white;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	text-align: center;
+	width: 50px;
+	font-size: 30px;
+	color: white;
+}
+
+.black {
+  background-color: black;
+}
+
+.red {
+  background-color: red;
+}
+
+.blue {
+  background-color: darkblue;
+}
+
+.blankcell {
+  box-sizing: border-box;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	text-align: center;
+	width: 50px;
+	font-size: 30px;
+	color: white;
+}
+
+.table {
+  border-spacing: 0 0;
+  padding: 30px;
+  padding-right: 45px;
+  background-color: green;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  border-radius: 70px;
+  border: solid gray;
+  border-width: 10px;
+}
+
+.rightmost {
+  border-right: 3px solid white;
+}
+
+.topmost {
+  border-top: 3px solid white;
+}
+
+.bottommost {
+  border-bottom: 3px solid white;
+}

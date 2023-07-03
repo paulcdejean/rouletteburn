@@ -1,8 +1,11 @@
-1. Draw a roulette table
-2. Figure out how to change the table appearance
-3. 
-
 Investigate tail window stuff, what kind of control do we have over the position etc
+
+* Put roulette table into the code
+* Render the chip on top of all cells
+* Render the chip when clicked
+
+
+
 
 Can explore both the interface for the roulette table, and the main UI and quests system.
 
