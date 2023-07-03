@@ -1,3 +1,5 @@
+Pull roulette out into another repo
+
 Investigate tail window stuff, what kind of control do we have over the position etc
 
 * Render the chip on top of all cells
