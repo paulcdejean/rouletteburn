@@ -1,6 +1,6 @@
-Experiment with https://astroturfcss.github.io/astroturf/introduction/
-
-Dive into postcss more
+1. Draw a roulette table
+2. Figure out how to change the table appearance
+3. 
 
 Investigate tail window stuff, what kind of control do we have over the position etc
 

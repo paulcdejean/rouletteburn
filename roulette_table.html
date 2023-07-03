@@ -6,6 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Roulette table test</title>
     <style>
+body {
+  background-color: black;
+}
+
 .cell {
   box-sizing: border-box;
   border-top: 3px solid white;
@@ -42,8 +46,18 @@
 
 .table {
   border-spacing: 0 0;
-  padding: 20px;
+  padding: 30px;
+  padding-right: 45px;
   background-color: green;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  border-radius: 70px;
+  border: solid gray;
+  border-width: 10px;
 }
 
 .rightmost {
