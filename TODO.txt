@@ -1,27 +1,4 @@
-Pull roulette out into another repo
-
-Investigate tail window stuff, what kind of control do we have over the position etc
-
 * Render the chip on top of all cells
 * Render the chip when clicked
 
-
-
-
-Can explore both the interface for the roulette table, and the main UI and quests system.
-
 C A S I N O
-
-MATH!!!
-
-hwgwRoughEarnings to get the other part of the line
-
-Add standard functionality
-
-Start server buyer once we have 3 cracks
-
-Current times:
-rouletteburn.js: NUKE.exe aquired at 2 seconds
-rouletteburn.js: BruteSSH.exe aquired at 10 minutes 4 seconds
-rouletteburn.js: FTPCrack.exe aquired at 15 minutes 26 second
-rouletteburn.js: RelaySMTP.exe aquired at 21 minutes 7 seconds
