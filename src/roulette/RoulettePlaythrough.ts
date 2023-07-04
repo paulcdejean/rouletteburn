@@ -14,6 +14,7 @@ interface PossibleResult {
 export class RoulettePlaythrough {
   rounds: RouletteRound[] = []
   rng ?: WHRNG
+  rngResults: number[] = []
   predictedResult: PossibleResult = {spins: [], skips: 0}
   seed : number = -1
   predictedWinner = -1
@@ -34,9 +35,29 @@ export class RoulettePlaythrough {
       if (this.seed >= 0) {
         this.rng = new WHRNG(this.seed)
         for(let spin = 0; spin < this.predictedResult.spins.length + this.predictedResult.skips; spin++) {
-          this.rng.random()
+          this.rngResults.push(Math.floor(this.rng.random() * 37))
         }
-        this.predictedWinner = Math.floor(Math.random() * 37)
+        this.predictedWinner = Math.floor(this.rng.random() * 37)
+        this.rngResults.push(this.predictedWinner)
+      }
+    }
+
+    if (this.rounds.length > this.seedCalculateRound) {
+      // Sanity check
+      if (this.seed >= 0 && this.predictedWinner >= 0 && this.rng !== undefined) {
+        if (round.guess === round.result) {
+          this.predictedWinner = Math.floor(this.rng.random() * 37)
+          this.rngResults.push(this.predictedWinner)
+        } else {
+          // Pull until we get what the actual result was
+          let rngResult
+          do {
+            rngResult = Math.floor(this.rng.random() * 37)
+            this.rngResults.push(rngResult)
+          } while (rngResult !== round.result)
+          this.predictedWinner = Math.floor(this.rng.random() * 37)
+          this.rngResults.push(this.predictedWinner)
+        }
       }
     }
   }

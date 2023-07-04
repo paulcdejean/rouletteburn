@@ -55,7 +55,7 @@ function RouletteHelper() {
         DEBUG: {JSON.stringify(gameState.playthrough.predictedResult)}
       </p>
       <p>
-        DEBUG: {gameState.playthrough.predictedWinner}
+        DEBUG: {JSON.stringify(gameState.playthrough.rngResults)}
       </p>
       <table className={css.table}>
         <tr>
