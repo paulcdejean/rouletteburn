@@ -1,13 +1,20 @@
 import { get_roulette_seeds } from "@rust"
+import { WHRNG } from "./WHRNG"
 
 export interface RouletteRound {
   guess: number
   result: number
 }
 
+interface PossibleResult {
+  spins: number[],
+  skips: number,
+}
+
 export class RoulettePlaythrough {
   rounds: RouletteRound[] = []
-  predictedResults: number[] = []
+  rng ?: WHRNG
+  predictedResult: PossibleResult = {spins: [], skips: 0}
   seed = -1
   predictedWinner = -1
   playthroughStartTime = -1
@@ -23,29 +30,36 @@ export class RoulettePlaythrough {
 
     if (this.rounds.length === this.seedCalculateRound) {
       this.getInitialSeed()
+      // if (this.seed < 0) {
+      //   throw new Error("Failed to find seed")
+      // }
+      // this.rng = new WHRNG(this.seed)
+      // this.rng.random()
     }
-    if (this.rounds.length >= this.seedCalculateRound) {
-      this.updatePredictedWinner()
-    }
+    // if (this.rounds.length >= this.seedCalculateRound) {
+    //   this.predictedWinner = this.rng?.random() ?? -1
+    // }
   }
 
   private getInitialSeed() {
     const possibleResults = Math.pow(2, this.rounds.length)
     for (let result = 0; result < possibleResults; result++) {
-      const possibleResult : number[] = []
+      const possibleSpins : number[] = []
+      let skips = 0
       let simulatedRound = 0
       let resultBits = result
       this.rounds.forEach(() => {
         if (resultBits & 1) {
-          possibleResult.push(this.rounds[simulatedRound].guess)
+          possibleSpins.push(this.rounds[simulatedRound].guess)
+          skips++
         } else {
-          possibleResult.push(this.rounds[simulatedRound].result)
+          possibleSpins.push(this.rounds[simulatedRound].result)
           simulatedRound++
         }
         resultBits = resultBits >> 1
       })
       const possibleSeeds = get_roulette_seeds(
-        new Float64Array(possibleResult),
+        new Float64Array(possibleSpins),
         this.playthroughStartTime - this.maxLookbackMiliseconds,
         this.playthroughStartTime
       )
@@ -53,17 +67,14 @@ export class RoulettePlaythrough {
       // Run with the first possible seed to reduce lag
       for (const possibleSeed of possibleSeeds) {
         this.seed = possibleSeed
-        this.predictedResults = possibleResult
+        this.predictedResult.spins = possibleSpins
+        this.predictedResult.skips = skips
         break
       }
       if (this.seed >= 0) {
         return
       }
     }
-    return
-  }
-
-  private updatePredictedWinner() {
     return
   }
 

@@ -55,7 +55,7 @@ function RouletteHelper() {
         DEBUG: {gameState.playthrough.seed.toString()}
       </p>
       <p>
-        DEBUG: {JSON.stringify(gameState.playthrough.predictedResults)}
+        DEBUG: {JSON.stringify(gameState.playthrough.predictedResult)}
       </p>
       <table className={css.table}>
         <tr>
