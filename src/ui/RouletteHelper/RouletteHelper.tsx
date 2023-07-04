@@ -45,17 +45,17 @@ function RouletteHelper() {
       </p>
       <p>
         Recent gambles: {gameState.chipLocation >= 0 ? 
-        gameState.playthrough.getRecentGuesses(numberOfResultsToDisplay).concat([gameState.chipLocation]).join(", ") :
+        gameState.playthrough.getRecentGuesses(numberOfResultsToDisplay).concat([gameState.chipLocation.toString().padStart(2, "0")]).join(", ") :
         gameState.playthrough.getRecentGuesses(numberOfResultsToDisplay).join(", ")}
       </p>
       <p>
         Recent results: {gameState.playthrough.getRecentResults(numberOfResultsToDisplay).join(", ")}
       </p>
       <p>
-        DEBUG: {gameState.playthrough.seed.toString()}
+        DEBUG: {JSON.stringify(gameState.playthrough.predictedResult)}
       </p>
       <p>
-        DEBUG: {JSON.stringify(gameState.playthrough.predictedResult)}
+        DEBUG: {gameState.playthrough.predictedWinner}
       </p>
       <table className={css.table}>
         <tr>

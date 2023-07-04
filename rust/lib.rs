@@ -28,7 +28,7 @@ pub fn get_roulette_seeds(spins: js_sys::Float64Array, minimum_seed: js_sys::Num
     return true;
   }).
   for_each(|correct_seed| {
-    results.add(&JsValue::from(correct_seed));
+    results.add(&js_sys::Number::from(correct_seed as f64));
   });
 
   return results;

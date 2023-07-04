@@ -15,7 +15,7 @@ export class RoulettePlaythrough {
   rounds: RouletteRound[] = []
   rng ?: WHRNG
   predictedResult: PossibleResult = {spins: [], skips: 0}
-  seed = -1
+  seed : number = -1
   predictedWinner = -1
   playthroughStartTime = -1
   maxLookbackMiliseconds = 300000 // 5 minutes, higher values are more lag
@@ -30,15 +30,15 @@ export class RoulettePlaythrough {
 
     if (this.rounds.length === this.seedCalculateRound) {
       this.getInitialSeed()
-      // if (this.seed < 0) {
-      //   throw new Error("Failed to find seed")
-      // }
-      // this.rng = new WHRNG(this.seed)
-      // this.rng.random()
+      // If this doesn't hit it's permanently dead :(
+      if (this.seed >= 0) {
+        this.rng = new WHRNG(this.seed)
+        for(let spin = 0; spin < this.predictedResult.spins.length + this.predictedResult.skips; spin++) {
+          this.rng.random()
+        }
+        this.predictedWinner = Math.floor(Math.random() * 37)
+      }
     }
-    // if (this.rounds.length >= this.seedCalculateRound) {
-    //   this.predictedWinner = this.rng?.random() ?? -1
-    // }
   }
 
   private getInitialSeed() {
@@ -78,11 +78,11 @@ export class RoulettePlaythrough {
     return
   }
 
-  public getRecentResults(count: number) : number[] {
-    return this.rounds.slice(Math.max(0, this.rounds.length - count)).map(round => round.result)
+  public getRecentResults(count: number) : string[] {
+    return this.rounds.slice(Math.max(0, this.rounds.length - count)).map(round => round.result.toString().padStart(2, "0"))
   }
 
-  public getRecentGuesses(count: number) : number[] {
-    return this.rounds.slice(Math.max(0, this.rounds.length - count)).map(round => round.guess)
+  public getRecentGuesses(count: number) : string[] {
+    return this.rounds.slice(Math.max(0, this.rounds.length - count)).map(round => round.guess.toString().padStart(2, "0"))
   }
 }
