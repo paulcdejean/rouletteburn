@@ -14,7 +14,7 @@ export default defineConfig({
       formats: ['es'],
     },
     target: 'esnext',
-    minify: true,
+    minify: false,
     outDir: 'bitburner'
   },
   plugins: [

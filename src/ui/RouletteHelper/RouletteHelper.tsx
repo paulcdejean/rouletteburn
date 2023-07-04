@@ -41,7 +41,10 @@ function RouletteHelper() {
     <>
       <style>{cssInline}</style>
       <p>
-        Click on the table one time to indicate your bet. Click a second time to indicate the roulette result. Only numerical bets are supported.
+        Click on the table one time to indicate your bet.
+        Click a second time to indicate the roulette result.
+        Only numerical bets are supported.
+        The green square, when it appears, has a 90% chance of winning.
       </p>
       <p>
         Recent gambles: {gameState.chipLocation >= 0 ? 
@@ -50,12 +53,6 @@ function RouletteHelper() {
       </p>
       <p>
         Recent results: {gameState.playthrough.getRecentResults(numberOfResultsToDisplay).join(", ")}
-      </p>
-      <p>
-        DEBUG: {JSON.stringify(gameState.playthrough.predictedResult)}
-      </p>
-      <p>
-        DEBUG: {JSON.stringify(gameState.playthrough.rngResults)}
       </p>
       <table className={css.table}>
         <tr>
