@@ -52,10 +52,10 @@ function RouletteHelper() {
         Recent results: {gameState.playthrough.getRecentResults(numberOfResultsToDisplay).join(", ")}
       </p>
       <p>
-        DEBUG: {Array.from(gameState.playthrough.potentialSeeds).toString()}
+        DEBUG: {gameState.playthrough.seed.toString()}
       </p>
       <p>
-        DEBUG: {gameState.playthrough.potentialResults.toString()}
+        DEBUG: {JSON.stringify(gameState.playthrough.predictedResults)}
       </p>
       <table className={css.table}>
         <tr>

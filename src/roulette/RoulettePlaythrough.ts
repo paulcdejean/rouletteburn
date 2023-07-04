@@ -5,18 +5,13 @@ export interface RouletteRound {
   result: number
 }
 
-interface PotentialResult {
-  result: number[]
-  seeds: Set<number>
-}
-
 export class RoulettePlaythrough {
   rounds: RouletteRound[] = []
-  potentialResults: PotentialResult[] = []
-  potentialSeeds = new Set<number>()
+  predictedResults: number[] = []
+  seed = -1
   predictedWinner = -1
   playthroughStartTime = -1
-  maxLookbackMiliseconds = 180000 // 10 minutes, higher values are more lag
+  maxLookbackMiliseconds = 300000 // 5 minutes, higher values are more lag
   seedCalculateRound = 5
 
   public addRound(round: RouletteRound) {
@@ -27,13 +22,14 @@ export class RoulettePlaythrough {
     }
 
     if (this.rounds.length === this.seedCalculateRound) {
-      this.generatePossibleResults()
-    } else if (this.rounds.length > this.seedCalculateRound) {
-      this.updatePossibleResults()
+      this.getInitialSeed()
+    }
+    if (this.rounds.length >= this.seedCalculateRound) {
+      this.updatePredictedWinner()
     }
   }
 
-  private generatePossibleResults() {
+  private getInitialSeed() {
     const possibleResults = Math.pow(2, this.rounds.length)
     for (let result = 0; result < possibleResults; result++) {
       const possibleResult : number[] = []
@@ -51,19 +47,23 @@ export class RoulettePlaythrough {
       const possibleSeeds = get_roulette_seeds(
         new Float64Array(possibleResult),
         this.playthroughStartTime - this.maxLookbackMiliseconds,
-        this.playthroughStartTime)
+        this.playthroughStartTime
+      )
+
+      // Run with the first possible seed to reduce lag
       for (const possibleSeed of possibleSeeds) {
-        this.potentialSeeds.add(possibleSeed)
+        this.seed = possibleSeed
+        this.predictedResults = possibleResult
+        break
       }
-      this.potentialResults.push({
-        result: possibleResult,
-        seeds: possibleSeeds,
-      })
+      if (this.seed >= 0) {
+        return
+      }
     }
     return
   }
 
-  private updatePossibleResults() {
+  private updatePredictedWinner() {
     return
   }
 
