@@ -16,7 +16,7 @@ export class RoulettePlaythrough {
   potentialSeeds = new Set<number>()
   predictedWinner = -1
   playthroughStartTime = -1
-  maxLookbackMiliseconds = 6e5 // 10 minutes, higher values are more lag
+  maxLookbackMiliseconds = 180000 // 10 minutes, higher values are more lag
   seedCalculateRound = 5
 
   public addRound(round: RouletteRound) {
@@ -55,12 +55,10 @@ export class RoulettePlaythrough {
       for (const possibleSeed of possibleSeeds) {
         this.potentialSeeds.add(possibleSeed)
       }
-      if (possibleSeeds.size > 0) {
-        this.potentialResults.push({
-          result: possibleResult,
-          seeds: possibleSeeds,
-        })
-      }
+      this.potentialResults.push({
+        result: possibleResult,
+        seeds: possibleSeeds,
+      })
     }
     return
   }

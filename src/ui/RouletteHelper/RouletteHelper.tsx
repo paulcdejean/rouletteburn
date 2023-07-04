@@ -52,7 +52,10 @@ function RouletteHelper() {
         Recent results: {gameState.playthrough.getRecentResults(numberOfResultsToDisplay).join(", ")}
       </p>
       <p>
-        DEBUG: {JSON.stringify(gameState.playthrough)}
+        DEBUG: {Array.from(gameState.playthrough.potentialSeeds).toString()}
+      </p>
+      <p>
+        DEBUG: {gameState.playthrough.potentialResults.toString()}
       </p>
       <table className={css.table}>
         <tr>
@@ -71,7 +74,7 @@ function RouletteHelper() {
           <RouletteCell num={36} className={`${css.cell} ${css.topmost}`} gameState={gameState} updateGameState={updateGameState} />
         </tr>
         <tr>
-          <RouletteCell num={0} className={`${css.cell} ${css.leftmost} ${css.blank}`} gameState={gameState} updateGameState={updateGameState} />
+          <RouletteCell num={0} className={`${css.cell} ${css.leftmost}`} gameState={gameState} updateGameState={updateGameState} />
           <RouletteCell num={2} className={css.cell} gameState={gameState} updateGameState={updateGameState} />
           <RouletteCell num={5} className={css.cell} gameState={gameState} updateGameState={updateGameState} />
           <RouletteCell num={8} className={css.cell} gameState={gameState} updateGameState={updateGameState} />
