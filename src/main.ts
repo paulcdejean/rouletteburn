@@ -1,12 +1,20 @@
 import { NS } from "@ns";
-import { sleep } from "@/utils";
 import RouletteHelper from "@/ui/RouletteHelper/RouletteHelper";
+import { sleep } from "./utils";
 
 export async function main(ns: NS): Promise<void> {
-  // Prevents spam, forgive the magic word here.
+  ns.clearLog()
   ns.disableLog("ALL")
+  // Cleans up react element after exit
+  ns.atExit(() => ns.clearLog())
 
-  ns.tprint("React!!!")
   ns.printRaw(React.createElement(RouletteHelper))
-  await sleep(30000)
+  
+  ns.tail()
+  ns.resizeTail(750, 400)
+  ns.moveTail(350, 550)
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, no-constant-condition
+  while(true) {
+    await sleep(2000)
+  }
 }
