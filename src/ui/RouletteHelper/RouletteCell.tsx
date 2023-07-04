@@ -1,16 +1,19 @@
 import { GameState } from "./RouletteHelper"
+import chipGraphic from "./svg/Militarypoker.svg"
+import css from "./css/RouletteTable.module.css"
 
 interface RouletteCellProps {
   num: number,
   gameState: GameState,
   updateGameState: Function,
+  className: string,
 }
 
 const enum CellColor {
   Red = "red",
   Black = "black",
   Blue = "darkblue",
-  Green = "green"
+  Green = "limegreen"
 }
 
 function cellColor(props: RouletteCellProps) : CellColor {
@@ -30,8 +33,8 @@ function cellColor(props: RouletteCellProps) : CellColor {
 
 function RouletteCell(props: RouletteCellProps) {
   return (
-    <td style={{backgroundColor: cellColor(props)}} onClick={props.updateGameState(props.num)}>
-      {props.num}
+    <td className={props.className} style={{backgroundColor: cellColor(props)}} onClick={() => props.updateGameState(props.num)}>
+      {props.num}<img className={css.chip} src={chipGraphic} style={{ display: props.gameState.chipLocation === props.num ? "block" : "none"}} />
     </td>
   )
 }
