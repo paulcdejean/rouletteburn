@@ -1,3 +1,5 @@
+import { get_roulette_seeds } from "@rust"
+
 export interface RouletteRound {
   guess: number
   result: number
@@ -5,7 +7,7 @@ export interface RouletteRound {
 
 interface PotentialResult {
   result: number[]
-  seeds: number[]
+  seeds: Set<number>
 }
 
 export class RoulettePlaythrough {
@@ -32,6 +34,34 @@ export class RoulettePlaythrough {
   }
 
   private generatePossibleResults() {
+    const possibleResults = Math.pow(2, this.rounds.length)
+    for (let result = 0; result < possibleResults; result++) {
+      const possibleResult : number[] = []
+      let simulatedRound = 0
+      let resultBits = result
+      this.rounds.forEach(() => {
+        if (resultBits & 1) {
+          possibleResult.push(this.rounds[simulatedRound].guess)
+        } else {
+          possibleResult.push(this.rounds[simulatedRound].result)
+          simulatedRound++
+        }
+        resultBits = resultBits >> 1
+      })
+      const possibleSeeds = get_roulette_seeds(
+        new Float64Array(possibleResult),
+        this.playthroughStartTime - this.maxLookbackMiliseconds,
+        this.playthroughStartTime)
+      for (const possibleSeed of possibleSeeds) {
+        this.potentialSeeds.add(possibleSeed)
+      }
+      if (possibleSeeds.size > 0) {
+        this.potentialResults.push({
+          result: possibleResult,
+          seeds: possibleSeeds,
+        })
+      }
+    }
     return
   }
 
