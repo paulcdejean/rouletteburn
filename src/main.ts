@@ -1,13 +1,12 @@
 import { NS } from "@ns";
 import RouletteHelper from "@/ui/RouletteHelper/RouletteHelper";
-import { sleep } from "./utils";
 
 export async function main(ns: NS): Promise<void> {
   roulette(ns)
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, no-constant-condition
   while(true) {
-    await sleep(2000)
+    await ns.asleep(2000)
   }
 }
 

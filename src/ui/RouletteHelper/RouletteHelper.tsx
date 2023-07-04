@@ -2,22 +2,38 @@ import RouletteCell from "./RouletteCell"
 
 import cssInline from "./css/RouletteTable.module.css?inline"
 import css from "./css/RouletteTable.module.css"
+import { RoulettePlaythrough } from "@/roulette/RoulettePlaythrough"
 
 export interface GameState {
-  predictedWinner: number,
   chipLocation: number,
+  lastClick: number,
+  playthrough: RoulettePlaythrough
 }
 
 function RouletteHelper() {
   const [gameState, setGameState] : [GameState, (gameState: GameState) => void] = React.useState({
-    predictedWinner: -1,
     chipLocation: -1,
+    lastClick: -1,
+    playthrough: new RoulettePlaythrough(),
   })
 
+  const numberOfResultsToDisplay = 10;
+
   function updateGameState(num: number) {
+    let chipLocation = num;
+    if (gameState.chipLocation >= 0) {
+      gameState.playthrough.addRound({
+        guess: gameState.lastClick,
+        result: num,
+      })
+
+      chipLocation = -1
+    }
+
     setGameState({
-      predictedWinner: 7,
-      chipLocation: num,
+      chipLocation: chipLocation,
+      lastClick: num,
+      playthrough: gameState.playthrough,
     })
   }
 
@@ -26,6 +42,17 @@ function RouletteHelper() {
       <style>{cssInline}</style>
       <p>
         Click on the table one time to indicate your bet. Click a second time to indicate the roulette result. Only numerical bets are supported.
+      </p>
+      <p>
+        Recent gambles: {gameState.chipLocation >= 0 ? 
+        gameState.playthrough.getRecentGuesses(numberOfResultsToDisplay).concat([gameState.chipLocation]).join(", ") :
+        gameState.playthrough.getRecentGuesses(numberOfResultsToDisplay).join(", ")}
+      </p>
+      <p>
+        Recent results: {gameState.playthrough.getRecentResults(numberOfResultsToDisplay).join(", ")}
+      </p>
+      <p>
+        DEBUG: {JSON.stringify(gameState.playthrough)}
       </p>
       <table className={css.table}>
         <tr>

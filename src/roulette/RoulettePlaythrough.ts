@@ -1,5 +1,3 @@
-import { WHRNG } from "./badRNG"
-
 export interface RouletteRound {
   guess: number
   result: number
@@ -11,80 +9,41 @@ interface PotentialResult {
 }
 
 export class RoulettePlaythrough {
-  rounds: RouletteRound[]
-  potentialResults: PotentialResult[]
-  maxSeed = 30000
+  rounds: RouletteRound[] = []
+  potentialResults: PotentialResult[] = []
   potentialSeeds = new Set<number>()
+  predictedWinner = -1
+  playthroughStartTime = -1
+  maxLookbackMiliseconds = 6e5 // 10 minutes, higher values are more lag
+  seedCalculateRound = 5
 
-  constructor(startingThreeRounds: RouletteRound[]) {
-    if (startingThreeRounds.length !== 3) {
-      throw new Error("RoulettePlaythrough must be constructed with exactly 3 rounds")
+  public addRound(round: RouletteRound) {
+    this.rounds.push(round)
+
+    if (this.playthroughStartTime < 0) {
+      this.playthroughStartTime = new Date().getTime()
     }
-    this.rounds = startingThreeRounds
 
-    this.potentialResults = this.getPotentialResults(startingThreeRounds)
-    this.fillPotentialSeeds()
-    this.potentialResults = this.potentialResults.filter(result => result.seeds.length > 0)
+    if (this.rounds.length === this.seedCalculateRound) {
+      this.generatePossibleResults()
+    } else if (this.rounds.length > this.seedCalculateRound) {
+      this.updatePossibleResults()
+    }
   }
 
-  private getPotentialResults(rounds: RouletteRound[]) : PotentialResult[] {
-    const potentialRolls : number[][] = []
-    const potentialResults : PotentialResult[] = []
-
-    function highestBinaryNumberOfXDigits(digitCount : number) : number {
-       return (Math.pow(2, digitCount) - 1)
-    }
-
-    function nthDigitIsOne(nthDigit: number, input: number) : boolean {
-      return ((input & Math.pow(2, nthDigit)) > 0)
-    }
-
-    const numberOfPotentialRolls = highestBinaryNumberOfXDigits(rounds.length)
-
-    let possibility = 0
-    while (possibility <= numberOfPotentialRolls) {
-      let simulatedRound = 0
-      const potentialRoll : number[] = []
-      while (potentialRoll.length < rounds.length) {
-        if (nthDigitIsOne(potentialRoll.length, possibility) || (rounds[simulatedRound].result === rounds[simulatedRound].guess)) {
-          potentialRoll.push(rounds[simulatedRound].result)
-          simulatedRound = simulatedRound + 1
-        } else {
-          potentialRoll.push(rounds[simulatedRound].guess)
-        }
-      }
-      potentialRolls.push(potentialRoll)
-      possibility = possibility + 1
-    }
-
-    potentialRolls.forEach(roll => {
-      potentialResults.push({
-        result: roll,
-        seeds: []
-      })
-    })
-
-    return potentialResults
+  private generatePossibleResults() {
+    return
   }
 
-  private fillPotentialSeeds() {
-    this.potentialResults.forEach(potentialResult => {
-      let seed = 0
-      while (seed < this.maxSeed) {
-        const rng = new WHRNG(seed)
+  private updatePossibleResults() {
+    return
+  }
 
-        let match = true
-        for (const spin of potentialResult.result) {
-          if(Math.floor(rng.random() * 37) !== spin) {
-            match = false
-          }
-        }
-        if (match) {
-          potentialResult.seeds.push(seed)
-          this.potentialSeeds.add(seed)
-        }
-        seed = seed + 1
-      }
-    })
+  public getRecentResults(count: number) : number[] {
+    return this.rounds.slice(Math.max(0, this.rounds.length - count)).map(round => round.result)
+  }
+
+  public getRecentGuesses(count: number) : number[] {
+    return this.rounds.slice(Math.max(0, this.rounds.length - count)).map(round => round.guess)
   }
 }
