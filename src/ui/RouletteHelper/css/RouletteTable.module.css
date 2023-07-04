@@ -1,11 +1,10 @@
 .cell {
   box-sizing: border-box;
-  border-top: 3px solid white;
-  border-left: 3px solid white;
-	padding-top: 25px;
-	padding-bottom: 25px;
+  border-bottom: 3px solid white;
+  border-right: 3px solid white;
 	text-align: center;
-	width: 50px;
+  height: 70px;
+	width: 40px;
 	font-size: 30px;
 	color: white;
 }
@@ -22,16 +21,6 @@
   background-color: darkblue;
 }
 
-.blankcell {
-  box-sizing: border-box;
-	padding-top: 25px;
-	padding-bottom: 25px;
-	text-align: center;
-	width: 50px;
-	font-size: 30px;
-	color: white;
-}
-
 .table {
   border-spacing: 0 0;
   padding: 30px;
@@ -42,14 +31,14 @@
   border-width: 10px;
 }
 
-.rightmost {
-  border-right: 3px solid white;
+.leftmost {
+  border-left: 3px solid white;
 }
 
 .topmost {
   border-top: 3px solid white;
 }
 
-.bottommost {
-  border-bottom: 3px solid white;
+.blankbottom {
+  border-bottom: none;
 }

@@ -20,9 +20,9 @@ export function roulette(ns: NS): void {
     ns.closeTail()
   })
 
-  ns.printRaw(React.createElement(RouletteHelper))
-  
   ns.tail()
-  ns.resizeTail(750, 400)
-  ns.moveTail(350, 550)
+  ns.resizeTail(750, 500)
+  ns.moveTail(350, 450)
+
+  ns.printRaw(React.createElement(RouletteHelper))
 }
