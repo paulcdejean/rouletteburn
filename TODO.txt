@@ -1,7 +1,0 @@
-Single cell roulette table
-
-idk props lol
-
-RouletteTable bit is pointless cause there's only one. RouletteCell makes sense tho cause there's multiple and they're redrawn.
-
-C A S I N O

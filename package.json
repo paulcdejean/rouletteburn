@@ -1,7 +1,7 @@
 {
   "name": "rouletteburn",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "build": "npm run build:rust && npm run build:lint && npm run build:ts && npm run build:vite && npm run build:lint",
