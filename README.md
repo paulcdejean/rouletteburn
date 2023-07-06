@@ -8,3 +8,7 @@ Bitburner experimentation
 # Demonstration
 
 https://www.youtube.com/watch?v=zMB4_RjjpgY
+
+# Installation
+
+Run in your bitburner terminal `wget https://github.com/paulcdejean/rouletteburn/releases/download/1.0.0/rouletteburn.js rouletteburn.js`
