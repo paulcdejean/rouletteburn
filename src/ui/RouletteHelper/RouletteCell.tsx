@@ -5,6 +5,7 @@ import css from "./css/RouletteTable.module.css"
 interface RouletteCellProps {
   num: number,
   gameState: GameState,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   updateGameState: Function,
   className: string,
 }

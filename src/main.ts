@@ -4,7 +4,6 @@ import RouletteHelper from "@/ui/RouletteHelper/RouletteHelper";
 export async function main(ns: NS): Promise<void> {
   roulette(ns)
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, no-constant-condition
   while(true) {
     await ns.asleep(2000)
   }

@@ -6,7 +6,7 @@
     "src/**/*",
     "../pkg/rouletteburn.d.ts"
   ],
-  "exclude": [".eslintc.cjs"],
+  "exclude": ["eslint.config.mjs"],
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",

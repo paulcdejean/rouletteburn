@@ -1,7 +1,7 @@
 {
   "name": "rouletteburn",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "scripts": {
     "build": "npm run build:rust && npm run build:lint && npm run build:ts && npm run build:vite && npm run build:lint",
@@ -13,10 +13,10 @@
   "devDependencies": {
     "@types/react": "^17.0.52",
     "@types/react-dom": "^17.0.20",
-    "@typescript-eslint/eslint-plugin": "^5.60.0",
-    "@typescript-eslint/parser": "^5.60.0",
+    "@typescript-eslint/eslint-plugin": "^8.23.0",
+    "@typescript-eslint/parser": "^8.23.0",
     "bitburner-filesync": "^1.1.5",
-    "eslint": "^8.43.0",
+    "eslint": "^9.20.0",
     "typescript": "~5.0.0",
     "vite": "^4.3.9",
     "vite-plugin-wasm": "^3.2.2"
@@ -24,5 +24,9 @@
   "overrides": {
     "semver": "^7.5.3",
     "optionator": "^0.9.0"
+  },
+  "dependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.20.0"
   }
 }
